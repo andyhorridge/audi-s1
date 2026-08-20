@@ -19,15 +19,14 @@ let currentPhoto = 0;
 
 
 const extensions = [
-
     "jpg",
-
+    "JPG",
     "jpeg",
-
+    "JPEG",
     "png",
-
-    "webp"
-
+    "PNG",
+    "webp",
+    "WEBP"
 ];
 
 
