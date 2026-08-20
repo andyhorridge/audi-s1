@@ -834,3 +834,20 @@ footer small {
     }
 
 }
+/* FORCE DIARY SECTIONS TO STACK VERTICALLY */
+
+#galleryGrid {
+    display: block !important;
+}
+
+.diary-entry {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 80px 0;
+    padding: 0;
+}
+
+.diary-photo-grid {
+    width: 100%;
+}
