@@ -851,3 +851,6 @@ footer small {
 .diary-photo-grid {
     width: 100%;
 }
+#galleryStatus {
+    display: none !important;
+}
