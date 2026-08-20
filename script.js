@@ -24,15 +24,32 @@ const diarySections = [
     {
         title: "Collection Day",
         date: "19th July 2026",
-        start: 1,
-        end: 3
+        items: [
+            { type: "photos", start: 1, end: 3 }
+        ]
     },
 
     {
         title: "Front End Respray — Road and Race",
         date: "11th August 2026",
-        start: 4,
-        end: 7
+        items: [
+            { type: "photos", start: 4, end: 7 }
+        ]
+    },
+
+    {
+        title: "Wheel Refurb — Radar International",
+        date: "19th August 2026",
+        items: [
+            { type: "photos", start: 8, end: 15 },
+
+            {
+                type: "youtube",
+                videoId: "NTnjmzblHOc"
+            },
+
+            { type: "photos", start: 16, end: 17 }
+        ]
     }
 
 ];
@@ -134,6 +151,41 @@ function createPhotoGrid() {
 }
 
 
+function createVideo(videoId) {
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "diary-video";
+
+
+    const iframe =
+        document.createElement("iframe");
+
+    iframe.src =
+        `https://www.youtube.com/embed/${videoId}`;
+
+    iframe.title =
+        "Dan's Audi S1 video";
+
+    iframe.loading =
+        "lazy";
+
+    iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+    iframe.allowFullscreen =
+        true;
+
+
+    wrapper.appendChild(iframe);
+
+    return wrapper;
+
+}
+
+
 async function loadDiary() {
 
     galleryGrid.innerHTML = "";
@@ -152,33 +204,53 @@ async function loadDiary() {
             createDiaryHeading(section);
 
 
-        const photoGrid =
-            createPhotoGrid();
-
-
         diarySection.appendChild(heading);
-        diarySection.appendChild(photoGrid);
 
         galleryGrid.appendChild(diarySection);
 
 
-        for (
-            let number = section.start;
-            number <= section.end;
-            number++
-        ) {
+        for (const item of section.items) {
 
-            const image =
-                await findPhoto(number);
+            if (item.type === "photos") {
+
+                const photoGrid =
+                    createPhotoGrid();
 
 
-            if (image) {
+                diarySection.appendChild(photoGrid);
 
-                addPhoto(
-                    image,
-                    number,
-                    photoGrid
-                );
+
+                for (
+                    let number = item.start;
+                    number <= item.end;
+                    number++
+                ) {
+
+                    const image =
+                        await findPhoto(number);
+
+
+                    if (image) {
+
+                        addPhoto(
+                            image,
+                            number,
+                            photoGrid
+                        );
+
+                    }
+
+                }
+
+            }
+
+
+            if (item.type === "youtube") {
+
+                const video =
+                    createVideo(item.videoId);
+
+                diarySection.appendChild(video);
 
             }
 
