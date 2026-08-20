@@ -1,5 +1,4 @@
 const galleryGrid = document.getElementById("galleryGrid");
-const galleryStatus = document.getElementById("galleryStatus");
 
 const photos = [];
 let currentPhoto = 0;
@@ -18,9 +17,6 @@ const extensions = [
 
 /*
     BUILD DIARY
-
-    To add another section later,
-    we just add another block here.
 */
 
 const diarySections = [
@@ -142,8 +138,6 @@ async function loadDiary() {
 
     galleryGrid.innerHTML = "";
 
-    let totalPhotos = 0;
-
 
     for (const section of diarySections) {
 
@@ -174,10 +168,6 @@ async function loadDiary() {
             number++
         ) {
 
-            galleryStatus.textContent =
-                `Loading photo ${numberName(number)}...`;
-
-
             const image =
                 await findPhoto(number);
 
@@ -190,15 +180,11 @@ async function loadDiary() {
                     photoGrid
                 );
 
-                totalPhotos++;
-
             }
 
         }
 
     }
-
-galleryStatus.style.display = "none";
 
 }
 
@@ -316,8 +302,12 @@ function updateLightbox() {
         )}`;
 
 
-    photoCounter.textContent =
-        `${currentPhoto + 1} / ${photos.length}`;
+    if (photoCounter) {
+
+        photoCounter.textContent =
+            `${currentPhoto + 1} / ${photos.length}`;
+
+    }
 
 }
 
