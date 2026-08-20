@@ -2,54 +2,112 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
 
     <title>Dan's Audi S1</title>
 
-    <meta name="description"
-          content="Dan's Audi S1 - photos, modifications and updates.">
+    <meta
+        name="description"
+        content="Dan's Audi S1 build diary, photos, modifications and updates."
+    >
 
-    <link rel="stylesheet" href="styles.css">
+
+    <!--
+        ?v=6 forces phones and browsers
+        to load the newest CSS file.
+    -->
+
+    <link
+        rel="stylesheet"
+        href="styles.css?v=6"
+    >
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HERO
+========================= -->
 
 <header>
 
     <nav>
+
         <div class="logo">
             <span>S</span>1
         </div>
 
+
         <div class="nav-links">
-            <a href="#car">THE CAR</a>
-            <a href="#gallery">GALLERY</a>
-            <a href="#mods">MODS</a>
+
+            <a href="#car">
+                THE CAR
+            </a>
+
+            <a href="#gallery">
+                DIARY
+            </a>
+
+            <a href="#mods">
+                MODS
+            </a>
+
         </div>
+
     </nav>
+
+
 
     <div class="hero">
 
         <img
             class="hero-image"
             src="s1-logo.jpeg"
-            alt="Dan's Audi S1">
+            alt="Dan's Audi S1"
+        >
+
 
         <p class="small-heading">
             AUDI S1 • QUATTRO
         </p>
 
+
         <h1>
-            DAN'S <span>AUDI S1</span>
+
+            DAN'S
+
+            <span>
+                AUDI S1
+            </span>
+
         </h1>
 
+
         <p class="intro">
-            Photos, modifications and memories from Dan's Audi S1.
+            The build diary, photos, modifications
+            and memories from Dan's Audi S1.
         </p>
 
-        <a class="button" href="#gallery">
-            VIEW THE CAR
+
+        <a
+            class="button"
+            href="#gallery"
+        >
+            VIEW THE BUILD
         </a>
 
     </div>
@@ -57,8 +115,18 @@
 </header>
 
 
+
+<!-- =========================
+     MAIN
+========================= -->
+
 <main>
 
+
+
+<!-- =========================
+     THE CAR
+========================= -->
 
 <section id="car">
 
@@ -66,15 +134,19 @@
         THE CAR
     </p>
 
+
     <h2>
         SMALL CAR.<br>
         BIG CHARACTER.
     </h2>
 
+
     <div class="red-line"></div>
 
 
+
     <div class="specs">
+
 
         <div class="spec-box">
 
@@ -87,6 +159,7 @@
             </span>
 
         </div>
+
 
 
         <div class="spec-box">
@@ -102,6 +175,7 @@
         </div>
 
 
+
         <div class="spec-box">
 
             <strong>
@@ -114,36 +188,54 @@
 
         </div>
 
+
     </div>
 
 </section>
 
 
+
+<!-- =========================
+     BUILD DIARY
+========================= -->
 
 <section id="gallery">
 
     <p class="section-small">
-        PHOTO ARCHIVE
+        BUILD DIARY
     </p>
 
+
     <h2>
-        DAN'S S1 GALLERY
+        DAN'S S1
     </h2>
+
 
     <div class="red-line"></div>
 
 
+
+    <!--
+
+        The diary sections, photos
+        and YouTube clips are inserted
+        here automatically by script.js.
+
+    -->
+
     <div
         id="galleryGrid"
-        class="gallery-grid">
+        class="gallery-grid"
+    >
     </div>
-
-
-    
 
 </section>
 
 
+
+<!-- =========================
+     MODIFICATIONS
+========================= -->
 
 <section id="mods">
 
@@ -151,11 +243,14 @@
         THE BUILD
     </p>
 
+
     <h2>
         MODIFICATIONS
     </h2>
 
+
     <div class="red-line"></div>
+
 
 
     <div class="mods-box">
@@ -164,8 +259,10 @@
             BUILD LIST
         </h3>
 
+
         <p>
-            Dan's modifications and upgrades will be added here.
+            Dan's modifications and upgrades
+            will be added here as the build continues.
         </p>
 
     </div>
@@ -177,37 +274,71 @@
 
 
 
-<div id="lightbox" class="lightbox">
+<!-- =========================
+     PHOTO LIGHTBOX
+========================= -->
+
+<div
+    id="lightbox"
+    class="lightbox"
+>
+
 
     <button
         id="closeLightbox"
-        class="close">
+        class="close"
+        type="button"
+        aria-label="Close photo"
+    >
         ×
     </button>
 
+
+
     <button
         id="previousPhoto"
-        class="previous">
+        class="previous"
+        type="button"
+        aria-label="Previous photo"
+    >
         ‹
     </button>
 
+
+
     <img
         id="lightboxImage"
-        alt="Audi S1 photograph">
+        src=""
+        alt="Dan's Audi S1 photograph"
+    >
+
+
 
     <button
         id="nextPhoto"
-        class="next">
+        class="next"
+        type="button"
+        aria-label="Next photo"
+    >
         ›
     </button>
 
-    <div id="photoCounter"
-         class="photo-counter">
+
+
+    <div
+        id="photoCounter"
+        class="photo-counter"
+    >
     </div>
+
 
 </div>
 
 
+
+<!-- =========================
+     FOOTER
+========================= -->
 
 <footer>
 
@@ -215,9 +346,11 @@
         <span>S</span>1
     </div>
 
+
     <p>
         Dan's Audi S1
     </p>
+
 
     <small>
         audi-s1.uk
@@ -226,7 +359,15 @@
 </footer>
 
 
-<script src="script.js?v=3"></script>
+
+<!--
+    ?v=6 forces phones and browsers
+    to load the newest JavaScript file.
+-->
+
+<script src="script.js?v=6"></script>
+
+
 </body>
 
 </html>
