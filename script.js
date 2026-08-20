@@ -8,19 +8,14 @@ let currentPhoto = 0;
 
 
 const extensions = [
-
     "jpg",
     "JPG",
-
     "jpeg",
     "JPEG",
-
     "png",
     "PNG",
-
     "webp",
     "WEBP"
-
 ];
 
 
@@ -34,34 +29,60 @@ const diarySections = [
 
     {
         title: "Collection Day",
-
         date: "19th July 2026",
 
-        start: 1,
+        items: [
 
-        end: 3
+            {
+                type: "photos",
+                start: 1,
+                end: 3
+            }
+
+        ]
     },
 
 
     {
         title: "Front End Respray — Road and Race",
-
         date: "11th August 2026",
 
-        start: 4,
+        items: [
 
-        end: 7
+            {
+                type: "photos",
+                start: 4,
+                end: 7
+            }
+
+        ]
     },
 
 
     {
         title: "Wheel Refurb — Radar International",
-
         date: "19th August 2026",
 
-        start: 8,
+        items: [
 
-        end: 17
+            {
+                type: "photos",
+                start: 8,
+                end: 15
+            },
+
+            {
+                type: "youtube",
+                videoId: "NTnjmzblHOc"
+            },
+
+            {
+                type: "photos",
+                start: 16,
+                end: 17
+            }
+
+        ]
     }
 
 ];
@@ -71,10 +92,7 @@ const diarySections = [
 function numberName(number) {
 
     return String(number)
-        .padStart(
-            3,
-            "0"
-        );
+        .padStart(3, "0");
 
 }
 
@@ -121,15 +139,11 @@ async function findPhoto(number) {
     ) {
 
         const filename =
-
             `photo${formatted}.${extension}`;
 
 
         const exists =
-
-            await checkImage(
-                filename
-            );
+            await checkImage(filename);
 
 
         if (exists) {
@@ -150,10 +164,7 @@ async function findPhoto(number) {
 function createDiaryHeading(section) {
 
     const heading =
-
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     heading.className =
@@ -161,10 +172,7 @@ function createDiaryHeading(section) {
 
 
     const title =
-
-        document.createElement(
-            "h3"
-        );
+        document.createElement("h3");
 
 
     title.textContent =
@@ -172,10 +180,7 @@ function createDiaryHeading(section) {
 
 
     const date =
-
-        document.createElement(
-            "p"
-        );
+        document.createElement("p");
 
 
     date.className =
@@ -186,14 +191,9 @@ function createDiaryHeading(section) {
         section.date;
 
 
-    heading.appendChild(
-        title
-    );
+    heading.appendChild(title);
 
-
-    heading.appendChild(
-        date
-    );
+    heading.appendChild(date);
 
 
     return heading;
@@ -205,10 +205,7 @@ function createDiaryHeading(section) {
 function createPhotoGrid() {
 
     const grid =
-
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     grid.className =
@@ -221,11 +218,56 @@ function createPhotoGrid() {
 
 
 
+/*
+    CREATE YOUTUBE TILE
+*/
+
+function createYouTubeVideo(videoId) {
+
+    const videoBox =
+        document.createElement("div");
+
+
+    videoBox.className =
+        "diary-video";
+
+
+    const iframe =
+        document.createElement("iframe");
+
+
+    iframe.src =
+        `https://www.youtube.com/embed/${videoId}`;
+
+
+    iframe.title =
+        "Dan's Audi S1 Wheel Refurb video";
+
+
+    iframe.loading =
+        "lazy";
+
+
+    iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+
+    iframe.allowFullscreen =
+        true;
+
+
+    videoBox.appendChild(iframe);
+
+
+    return videoBox;
+
+}
+
+
+
 async function loadDiary() {
 
-
-    galleryGrid.innerHTML =
-        "";
+    galleryGrid.innerHTML = "";
 
 
     for (
@@ -235,10 +277,7 @@ async function loadDiary() {
 
 
         const diarySection =
-
-            document.createElement(
-                "section"
-            );
+            document.createElement("section");
 
 
         diarySection.className =
@@ -246,25 +285,16 @@ async function loadDiary() {
 
 
         const heading =
-
-            createDiaryHeading(
-                section
-            );
+            createDiaryHeading(section);
 
 
         const photoGrid =
-
             createPhotoGrid();
 
 
-        diarySection.appendChild(
-            heading
-        );
+        diarySection.appendChild(heading);
 
-
-        diarySection.appendChild(
-            photoGrid
-        );
+        diarySection.appendChild(photoGrid);
 
 
         galleryGrid.appendChild(
@@ -272,33 +302,73 @@ async function loadDiary() {
         );
 
 
+        /*
+            LOAD EACH ITEM IN THE EXACT
+            ORDER LISTED ABOVE
+        */
+
         for (
-            let number =
-                section.start;
-
-            number <=
-                section.end;
-
-            number++
+            const item
+            of section.items
         ) {
 
 
-            const image =
+            /*
+                PHOTOS
+            */
 
-                await findPhoto(
-                    number
+            if (
+                item.type === "photos"
+            ) {
+
+
+                for (
+                    let number = item.start;
+                    number <= item.end;
+                    number++
+                ) {
+
+
+                    const image =
+                        await findPhoto(number);
+
+
+                    if (image) {
+
+
+                        addPhoto(
+                            image,
+                            number,
+                            photoGrid
+                        );
+
+
+                    }
+
+                }
+
+            }
+
+
+
+            /*
+                YOUTUBE VIDEO
+            */
+
+            if (
+                item.type === "youtube"
+            ) {
+
+
+                const video =
+                    createYouTubeVideo(
+                        item.videoId
+                    );
+
+
+                photoGrid.appendChild(
+                    video
                 );
-
-
-            if (image) {
-
-
-                addPhoto(
-                    image,
-                    number,
-                    photoGrid
-                );
-
 
             }
 
@@ -318,10 +388,7 @@ function addPhoto(
 
 
     const button =
-
-        document.createElement(
-            "button"
-        );
+        document.createElement("button");
 
 
     button.className =
@@ -333,10 +400,7 @@ function addPhoto(
 
 
     const image =
-
-        document.createElement(
-            "img"
-        );
+        document.createElement("img");
 
 
     image.src =
@@ -344,7 +408,6 @@ function addPhoto(
 
 
     image.alt =
-
         `Dan's Audi S1 photo ${numberName(number)}`;
 
 
@@ -375,9 +438,7 @@ function addPhoto(
     button.onclick =
         () => {
 
-            openLightbox(
-                index
-            );
+            openLightbox(index);
 
         };
 
@@ -395,21 +456,18 @@ function addPhoto(
 */
 
 const lightbox =
-
     document.getElementById(
         "lightbox"
     );
 
 
 const lightboxImage =
-
     document.getElementById(
         "lightboxImage"
     );
 
 
 const photoCounter =
-
     document.getElementById(
         "photoCounter"
     );
@@ -453,7 +511,6 @@ function closeLightbox() {
 
 function updateLightbox() {
 
-
     if (
         photos.length === 0
     ) {
@@ -464,25 +521,18 @@ function updateLightbox() {
 
 
     lightboxImage.src =
-
-        photos[
-            currentPhoto
-        ].source;
+        photos[currentPhoto].source;
 
 
     lightboxImage.alt =
-
         `Dan's Audi S1 photo ${numberName(
-            photos[
-                currentPhoto
-            ].number
+            photos[currentPhoto].number
         )}`;
 
 
     if (photoCounter) {
 
         photoCounter.textContent =
-
             `${currentPhoto + 1} / ${photos.length}`;
 
     }
@@ -492,7 +542,6 @@ function updateLightbox() {
 
 
 function nextPhoto() {
-
 
     currentPhoto =
 
@@ -512,7 +561,6 @@ function nextPhoto() {
 
 
 function previousPhoto() {
-
 
     currentPhoto =
 
@@ -591,8 +639,7 @@ document.addEventListener(
 
 
         if (
-            event.key ===
-            "Escape"
+            event.key === "Escape"
         ) {
 
             closeLightbox();
@@ -601,8 +648,7 @@ document.addEventListener(
 
 
         if (
-            event.key ===
-            "ArrowRight"
+            event.key === "ArrowRight"
         ) {
 
             nextPhoto();
@@ -611,8 +657,7 @@ document.addEventListener(
 
 
         if (
-            event.key ===
-            "ArrowLeft"
+            event.key === "ArrowLeft"
         ) {
 
             previousPhoto();
