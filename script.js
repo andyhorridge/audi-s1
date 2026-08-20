@@ -198,18 +198,7 @@ async function loadDiary() {
 
     }
 
-
-    if (totalPhotos === 0) {
-
-        galleryStatus.innerHTML =
-            "No diary photographs found yet.";
-
-    } else {
-
-        galleryStatus.textContent =
-            `${totalPhotos} photographs`;
-
-    }
+galleryStatus.style.display = "none";
 
 }
 
