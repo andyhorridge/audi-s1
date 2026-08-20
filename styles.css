@@ -1,786 +1,777 @@
-const galleryGrid = document.getElementById("galleryGrid");
+* {
+    box-sizing: border-box;
+}
 
-const photos = [];
-let currentPhoto = 0;
+html {
+    scroll-behavior: smooth;
+    background: #050505;
+}
 
-const extensions = [
-    "jpg",
-    "JPG",
-    "jpeg",
-    "JPEG",
-    "png",
-    "PNG",
-    "webp",
-    "WEBP"
-];
+body {
+    margin: 0;
+    min-height: 100vh;
 
+    background: #050505;
 
-/*
-    DAN'S AUDI S1 BUILD DIARY
-*/
+    color: white;
 
-const diarySections = [
-
-    {
-        title: "Collection Day",
-        date: "19th July 2026",
-
-        items: [
-
-            {
-                type: "photos",
-                start: 1,
-                end: 3
-            }
-
-        ]
-    },
-
-
-    {
-        title: "Front End Respray — Road and Race",
-        date: "11th August 2026",
-
-        items: [
-
-            {
-                type: "photos",
-                start: 4,
-                end: 7
-            }
-
-        ]
-    },
-
-
-    {
-        title: "Wheel Refurb — Radar International",
-        date: "19th August 2026",
-
-        items: [
-
-            {
-                type: "photos",
-                start: 8,
-                end: 15
-            },
-
-            {
-                type: "youtube",
-                videoId: "NTnjmzblHOc"
-            },
-
-            {
-                type: "photos",
-                start: 16,
-                end: 17
-            }
-
-        ]
-    }
-
-];
-
-
-
-/*
-    PHOTO NUMBER
-*/
-
-function numberName(number) {
-
-    return String(number).padStart(3, "0");
-
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
+body::before {
 
-/*
-    CHECK WHETHER IMAGE EXISTS
-*/
+    content: "";
 
-function checkImage(url) {
+    position: fixed;
 
-    return new Promise(resolve => {
+    inset: 0;
 
-        const image = new Image();
+    pointer-events: none;
 
-        image.onload = () => resolve(url);
+    opacity: 0.15;
 
-        image.onerror = () => resolve(null);
+    background:
 
-        image.src = url;
-
-    });
-
-}
-
-
-
-/*
-    FIND PHOTO
-*/
-
-async function findPhoto(number) {
-
-    const formatted = numberName(number);
-
-    for (const extension of extensions) {
-
-        const filename =
-            `photo${formatted}.${extension}`;
-
-        const exists =
-            await checkImage(filename);
-
-        if (exists) {
-
-            return exists;
-
-        }
-
-    }
-
-    return null;
-
-}
-
-
-
-/*
-    CREATE DIARY HEADING
-*/
-
-function createDiaryHeading(section) {
-
-    const heading =
-        document.createElement("div");
-
-    heading.className =
-        "diary-heading";
-
-
-    const title =
-        document.createElement("h3");
-
-    title.textContent =
-        section.title;
-
-
-    const date =
-        document.createElement("p");
-
-    date.className =
-        "diary-date";
-
-    date.textContent =
-        section.date;
-
-
-    heading.appendChild(title);
-
-    heading.appendChild(date);
-
-
-    return heading;
-
-}
-
-
-
-/*
-    CREATE DIARY GRID
-*/
-
-function createDiaryGrid() {
-
-    const grid =
-        document.createElement("div");
-
-    grid.className =
-        "diary-photo-grid";
-
-    return grid;
-
-}
-
-
-
-/*
-    CREATE YOUTUBE VIDEO
-*/
-
-function createVideo(videoId) {
-
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.className =
-        "diary-video";
-
-
-    const iframe =
-        document.createElement("iframe");
-
-
-    iframe.src =
-        `https://www.youtube.com/embed/${videoId}`;
-
-
-    iframe.title =
-        "Dan's Audi S1 video";
-
-
-    iframe.loading =
-        "lazy";
-
-
-    iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
-
-    iframe.allowFullscreen =
-        true;
-
-
-    wrapper.appendChild(iframe);
-
-
-    return wrapper;
-
-}
-
-
-
-/*
-    LOAD BUILD DIARY
-*/
-
-async function loadDiary() {
-
-    galleryGrid.innerHTML = "";
-
-
-    for (const section of diarySections) {
-
-
-        /*
-            CREATE SECTION
-        */
-
-        const diarySection =
-            document.createElement("section");
-
-        diarySection.className =
-            "diary-entry";
-
-
-        /*
-            ADD HEADING
-        */
-
-        const heading =
-            createDiaryHeading(section);
-
-        diarySection.appendChild(heading);
-
-
-        /*
-            ONE GRID FOR THE WHOLE DIARY ENTRY
-
-            This means photos and videos flow
-            together in the correct order.
-        */
-
-        const diaryGrid =
-            createDiaryGrid();
-
-        diarySection.appendChild(diaryGrid);
-
-
-        galleryGrid.appendChild(
-            diarySection
+        repeating-linear-gradient(
+            0deg,
+            rgba(255,255,255,0.025),
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 4px
         );
 
-
-        /*
-            LOAD ITEMS IN EXACT ORDER
-        */
-
-        for (const item of section.items) {
-
-
-            /*
-                PHOTOS
-            */
-
-            if (item.type === "photos") {
-
-
-                for (
-                    let number = item.start;
-                    number <= item.end;
-                    number++
-                ) {
-
-
-                    const image =
-                        await findPhoto(number);
-
-
-                    if (image) {
-
-
-                        addPhoto(
-                            image,
-                            number,
-                            diaryGrid
-                        );
-
-
-                    }
-
-                }
-
-            }
-
-
-            /*
-                YOUTUBE VIDEO
-            */
-
-            if (item.type === "youtube") {
-
-
-                const video =
-                    createVideo(
-                        item.videoId
-                    );
-
-
-                diaryGrid.appendChild(
-                    video
-                );
-
-            }
-
-        }
-
-    }
-
+    z-index: -1;
 }
 
 
 
-/*
-    ADD PHOTO
-*/
+/* =========================
+   NAVIGATION
+========================= */
 
-function addPhoto(
-    source,
-    number,
-    targetGrid
-) {
+nav {
 
-
-    const button =
-        document.createElement("button");
-
-
-    button.className =
-        "gallery-item";
-
-
-    button.type =
-        "button";
-
-
-    const image =
-        document.createElement("img");
-
-
-    image.src =
-        source;
-
-
-    image.alt =
-        `Dan's Audi S1 photo ${numberName(number)}`;
-
-
-    image.loading =
-        "lazy";
-
-
-    button.appendChild(
-        image
-    );
-
-
-    /*
-        SAVE PHOTO FOR LIGHTBOX
-    */
-
-    const index =
-        photos.length;
-
-
-    photos.push({
-
-        source: source,
-
-        number: number
-
-    });
-
-
-    /*
-        OPEN PHOTO WHEN CLICKED
-    */
-
-    button.onclick =
-        () => {
-
-            openLightbox(index);
-
-        };
-
-
-    /*
-        ADD TO DIARY GRID
-    */
-
-    targetGrid.appendChild(
-        button
-    );
-
-}
-
-
-
-/*
-    LIGHTBOX
-*/
-
-const lightbox =
-    document.getElementById(
-        "lightbox"
-    );
-
-
-const lightboxImage =
-    document.getElementById(
-        "lightboxImage"
-    );
-
-
-const photoCounter =
-    document.getElementById(
-        "photoCounter"
-    );
-
-
-
-/*
-    OPEN LIGHTBOX
-*/
-
-function openLightbox(index) {
-
-    currentPhoto =
-        index;
-
-
-    updateLightbox();
-
-
-    lightbox.classList.add(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-
-/*
-    CLOSE LIGHTBOX
-*/
-
-function closeLightbox() {
-
-    lightbox.classList.remove(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-
-/*
-    UPDATE LIGHTBOX IMAGE
-*/
-
-function updateLightbox() {
-
-    if (
-        photos.length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    lightboxImage.src =
-        photos[
-            currentPhoto
-        ].source;
-
-
-    lightboxImage.alt =
-        `Dan's Audi S1 photo ${numberName(
-            photos[
-                currentPhoto
-            ].number
-        )}`;
-
-
-    /*
-        PHOTO NUMBER INSIDE LIGHTBOX
-    */
-
-    if (photoCounter) {
-
-        photoCounter.textContent =
-            `${currentPhoto + 1} / ${photos.length}`;
-
-    }
-
-}
-
-
-
-/*
-    NEXT PHOTO
-*/
-
-function nextPhoto() {
-
-    currentPhoto =
-
-        (
-            currentPhoto + 1
-        )
-
-        %
-
-        photos.length;
-
-
-    updateLightbox();
-
-}
-
-
-
-/*
-    PREVIOUS PHOTO
-*/
-
-function previousPhoto() {
-
-    currentPhoto =
-
-        (
-            currentPhoto
-            - 1
-            + photos.length
-        )
-
-        %
-
-        photos.length;
-
-
-    updateLightbox();
-
-}
-
-
-
-/*
-    LIGHTBOX BUTTONS
-*/
-
-document
-    .getElementById(
-        "closeLightbox"
-    )
-    .onclick =
-        closeLightbox;
-
-
-document
-    .getElementById(
-        "nextPhoto"
-    )
-    .onclick =
-        nextPhoto;
-
-
-document
-    .getElementById(
-        "previousPhoto"
-    )
-    .onclick =
-        previousPhoto;
-
-
-
-/*
-    CLICK BACKGROUND TO CLOSE
-*/
-
-lightbox.onclick =
-    event => {
-
-        if (
-            event.target ===
-            lightbox
-        ) {
-
-            closeLightbox();
-
-        }
-
-    };
-
-
-
-/*
-    KEYBOARD CONTROLS
-*/
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-
-        if (
-            !lightbox.classList.contains(
-                "open"
-            )
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            event.key ===
-            "Escape"
-        ) {
-
-            closeLightbox();
-
-        }
-
-
-        if (
-            event.key ===
-            "ArrowRight"
-        ) {
-
-            nextPhoto();
-
-        }
-
-
-        if (
-            event.key ===
-            "ArrowLeft"
-        ) {
-
-            previousPhoto();
-
-        }
-
-    }
-);
-
-
-
-/*
-    START DIARY
-*/
-
-loadDiary();
-/* IPHONE BACKGROUND + VIDEO TILE FIX */
-
-html,
-body {
-    background-color: #050505 !important;
-    min-height: 100%;
-}
-
-body {
-    min-height: 100vh;
-}
-
-.diary-photo-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    width: 100%;
-}
-
-.gallery-item,
-.diary-video {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background: #111;
-}
-
-.diary-video {
-    position: relative;
-}
-
-.diary-video iframe {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 25px 6%;
+
+    z-index: 10;
+}
+
+
+.logo {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    letter-spacing: -3px;
+}
+
+
+.logo span {
+
+    color: #e30613;
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    gap: 25px;
+}
+
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+
+/* =========================
+   HERO
+========================= */
+
+header {
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(227,6,19,0.13),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            #020202,
+            #090909
+        );
+}
+
+
+.hero {
+
+    padding:
+        110px 20px
+        70px;
+}
+
+
+.hero-image {
+
+    width: min(
+        520px,
+        82vw
+    );
+
+    aspect-ratio: 1;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.8);
+
+    box-shadow:
+
+        0 0 25px
+        rgba(255,255,255,0.2),
+
+        0 0 65px
+        rgba(227,6,19,0.2);
+}
+
+
+.small-heading,
+.section-small {
+
+    color: #ff1020;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 4px;
+}
+
+
+h1 {
+
+    margin:
+        22px 0
+        10px;
+
+    font-size:
+        clamp(
+            45px,
+            10vw,
+            95px
+        );
+
+    line-height: 0.9;
+}
+
+
+h1 span {
+
+    color: transparent;
+
+    -webkit-text-stroke:
+        1px white;
+}
+
+
+.intro {
+
+    max-width: 600px;
+
+    margin:
+        25px auto;
+
+    color: #aaaaaa;
+
+    line-height: 1.7;
+}
+
+
+.button {
+
+    display: inline-block;
+
+    padding:
+        15px 25px;
+
+    background: #e30613;
+
+    border:
+        1px solid
+        #ff2634;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    box-shadow:
+
+        0 0 25px
+        rgba(227,6,19,0.35);
+}
+
+
+
+/* =========================
+   MAIN SECTIONS
+========================= */
+
+section {
+
+    width: min(
+        1150px,
+        90%
+    );
+
+    margin: auto;
+
+    padding:
+        90px 0;
+}
+
+
+h2 {
+
+    margin:
+        12px 0;
+
+    font-size:
+        clamp(
+            38px,
+            7vw,
+            65px
+        );
+
+    line-height: 0.95;
+}
+
+
+.red-line {
+
+    width: 90px;
+
+    height: 3px;
+
+    margin:
+        20px 0
+        45px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            #e30613,
+            transparent
+        );
+}
+
+
+
+/* =========================
+   CAR SPECS
+========================= */
+
+.specs {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+}
+
+
+.spec-box {
+
+    min-height: 160px;
+
+    padding: 25px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #18181b,
+            #090909
+        );
+
+    border:
+        1px solid
+        #242424;
+
+    border-top:
+        3px solid
+        #e30613;
+}
+
+
+.spec-box strong {
+
+    font-size:
+        clamp(
+            25px,
+            4vw,
+            40px
+        );
+}
+
+
+.spec-box span {
+
+    margin-top: 6px;
+
+    color: #888888;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+}
+
+
+
+/* =========================
+   GALLERY / BUILD DIARY
+========================= */
+
+#gallery {
+
+    width: min(
+        1400px,
+        94%
+    );
+}
+
+
+#galleryGrid {
+
     display: block;
 }
+
+
+.diary-entry {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    margin:
+        0 0 80px 0;
+
+    padding: 0;
+}
+
+
+.diary-heading {
+
+    margin-bottom: 25px;
+
+    padding-left: 18px;
+
+    border-left:
+        4px solid
+        #e30613;
+}
+
+
+.diary-heading h3 {
+
+    margin:
+        0 0 6px 0;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            26px,
+            5vw,
+            42px
+        );
+
+    text-transform: uppercase;
+
+    letter-spacing: -1px;
+}
+
+
+.diary-date {
+
+    margin: 0;
+
+    color: #e30613;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.diary-photo-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    width: 100%;
+}
+
+
+.gallery-item {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 0;
+
+    background: #111;
+
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    cursor: pointer;
+}
+
+
+.gallery-item img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.3s;
+}
+
+
+.gallery-item:hover img {
+
+    transform:
+        scale(1.04);
+}
+
+
+
+/* =========================
+   MODIFICATIONS
+========================= */
+
+.mods-box {
+
+    padding: 35px;
+
+    border-left:
+        4px solid
+        #e30613;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #151515,
+            #080808
+        );
+}
+
+
+.mods-box h3 {
+
+    font-size: 25px;
+
+    margin-top: 0;
+}
+
+
+.mods-box p {
+
+    color: #999999;
+}
+
+
+
+/* =========================
+   LIGHTBOX
+========================= */
+
+.lightbox {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        rgba(0,0,0,0.96);
+
+    z-index: 1000;
+}
+
+
+.lightbox.open {
+
+    display: flex;
+}
+
+
+.lightbox img {
+
+    max-width: 92%;
+
+    max-height: 87%;
+}
+
+
+.close {
+
+    position: absolute;
+
+    right: 20px;
+
+    top: 15px;
+
+    border: none;
+
+    background: none;
+
+    color: white;
+
+    font-size: 45px;
+
+    cursor: pointer;
+}
+
+
+.previous,
+.next {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    width: 45px;
+
+    height: 70px;
+
+    border:
+        1px solid
+        #333333;
+
+    background:
+        rgba(0,0,0,0.5);
+
+    color: white;
+
+    font-size: 45px;
+
+    cursor: pointer;
+}
+
+
+.previous {
+
+    left: 5px;
+}
+
+
+.next {
+
+    right: 5px;
+}
+
+
+.photo-counter {
+
+    position: absolute;
+
+    bottom: 18px;
+
+    color: #888888;
+
+    letter-spacing: 2px;
+}
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    text-align: center;
+
+    padding:
+        60px 20px;
+
+    border-top:
+        1px solid
+        #222222;
+
+    background: #050505;
+}
+
+
+.footer-logo {
+
+    font-size: 40px;
+
+    font-weight: bold;
+}
+
+
+.footer-logo span {
+
+    color: #e30613;
+}
+
+
+footer p {
+
+    margin: 8px;
+}
+
+
+footer small {
+
+    color: #666666;
+}
+
+
+
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 700px) {
 
     html,
     body {
-        background-color: #050505 !important;
+
+        background:
+            #050505;
     }
+
+
+    .nav-links {
+
+        gap: 12px;
+    }
+
+
+    .nav-links a {
+
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+
+    .specs {
+
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .diary-entry {
+
+        margin-bottom:
+            55px;
+    }
+
 
     .diary-photo-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+            1fr;
     }
 
-    .gallery-item,
-    .diary-video {
-        aspect-ratio: 16 / 11;
+
+    .gallery-item {
+
+        aspect-ratio:
+            16 / 11;
+    }
+
+
+    section {
+
+        padding:
+            70px 0;
     }
 
 }
