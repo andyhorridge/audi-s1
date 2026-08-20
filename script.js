@@ -1,22 +1,8 @@
-const galleryGrid =
-    document.getElementById(
-        "galleryGrid"
-    );
-
-const galleryStatus =
-    document.getElementById(
-        "galleryStatus"
-    );
-
-
+const galleryGrid = document.getElementById("galleryGrid");
+const galleryStatus = document.getElementById("galleryStatus");
 
 const photos = [];
-
-
-
 let currentPhoto = 0;
-
-
 
 const extensions = [
     "jpg",
@@ -30,79 +16,69 @@ const extensions = [
 ];
 
 
+/*
+    BUILD DIARY
+
+    To add another section later,
+    we just add another block here.
+*/
+
+const diarySections = [
+
+    {
+        title: "Collection Day",
+        date: "19th July 2026",
+        start: 1,
+        end: 3
+    },
+
+    {
+        title: "Front End Respray — Road and Race",
+        date: "11th August 2026",
+        start: 4,
+        end: 7
+    }
+
+];
+
 
 function numberName(number) {
 
-    return String(number)
-        .padStart(
-            3,
-            "0"
-        );
+    return String(number).padStart(3, "0");
 
 }
-
 
 
 function checkImage(url) {
 
-    return new Promise(
-        resolve => {
+    return new Promise(resolve => {
 
-            const image =
-                new Image();
+        const image = new Image();
 
-            image.onload =
-                () =>
-                    resolve(
-                        url
-                    );
+        image.onload = () => resolve(url);
 
-            image.onerror =
-                () =>
-                    resolve(
-                        null
-                    );
+        image.onerror = () => resolve(null);
 
-            image.src =
-                url;
+        image.src = url;
 
-        }
-    );
+    });
 
 }
 
 
+async function findPhoto(number) {
 
-async function findPhoto(
-    number
-) {
+    const formatted = numberName(number);
 
-    const formatted =
-        numberName(
-            number
-        );
-
-
-    for (
-        const extension
-        of extensions
-    ) {
+    for (const extension of extensions) {
 
         const filename =
-
             `photo${formatted}.${extension}`;
 
-
         const exists =
+            await checkImage(filename);
 
-            await checkImage(
-                filename
-            );
-
-
-        if (
-            exists
-        ) {
+        if (exists) {
 
             return exists;
 
@@ -110,216 +86,211 @@ async function findPhoto(
 
     }
 
-
     return null;
 
 }
 
 
+function createDiaryHeading(section) {
 
-async function loadGallery() {
+    const heading =
+        document.createElement("div");
 
-
-    let number = 1;
-
-    let missing = 0;
-
-
-    while (
-        number <= 999
-    ) {
+    heading.className =
+        "diary-heading";
 
 
-        galleryStatus.textContent =
+    const title =
+        document.createElement("h3");
 
-            `Checking photo ${numberName(number)}...`;
-
-
-        const image =
-
-            await findPhoto(
-                number
-            );
+    title.textContent =
+        section.title;
 
 
-        if (
-            image
+    const date =
+        document.createElement("p");
+
+    date.className =
+        "diary-date";
+
+    date.textContent =
+        section.date;
+
+
+    heading.appendChild(title);
+    heading.appendChild(date);
+
+    return heading;
+
+}
+
+
+function createPhotoGrid() {
+
+    const grid =
+        document.createElement("div");
+
+    grid.className =
+        "diary-photo-grid";
+
+    return grid;
+
+}
+
+
+async function loadDiary() {
+
+    galleryGrid.innerHTML = "";
+
+    let totalPhotos = 0;
+
+
+    for (const section of diarySections) {
+
+        const diarySection =
+            document.createElement("section");
+
+        diarySection.className =
+            "diary-entry";
+
+
+        const heading =
+            createDiaryHeading(section);
+
+
+        const photoGrid =
+            createPhotoGrid();
+
+
+        diarySection.appendChild(heading);
+        diarySection.appendChild(photoGrid);
+
+        galleryGrid.appendChild(diarySection);
+
+
+        for (
+            let number = section.start;
+            number <= section.end;
+            number++
         ) {
 
-
-            addPhoto(
-                image,
-                number
-            );
+            galleryStatus.textContent =
+                `Loading photo ${numberName(number)}...`;
 
 
-            missing = 0;
+            const image =
+                await findPhoto(number);
 
 
-        } else {
+            if (image) {
 
+                addPhoto(
+                    image,
+                    number,
+                    photoGrid
+                );
 
-            missing++;
+                totalPhotos++;
 
-
-        }
-
-
-
-        /*
-        Stops looking after
-        5 missing numbers.
-        */
-
-        if (
-            missing >= 5
-        ) {
-
-            break;
+            }
 
         }
-
-
-        number++;
 
     }
 
 
-
-    if (
-        photos.length === 0
-    ) {
-
+    if (totalPhotos === 0) {
 
         galleryStatus.innerHTML =
-
-            "No photographs added yet.<br>" +
-
-            "Upload <strong>photo001.jpg</strong> to begin.";
-
+            "No diary photographs found yet.";
 
     } else {
 
-
         galleryStatus.textContent =
-
-            `${photos.length} photographs loaded`;
-
+            `${totalPhotos} photographs`;
 
     }
 
 }
 
 
-
 function addPhoto(
     source,
-    number
+    number,
+    targetGrid
 ) {
 
-
     const button =
-
-        document.createElement(
-            "button"
-        );
-
+        document.createElement("button");
 
     button.className =
         "gallery-item";
 
 
     const image =
-
-        document.createElement(
-            "img"
-        );
-
+        document.createElement("img");
 
     image.src =
         source;
 
-
     image.alt =
-
         `Dan's Audi S1 photo ${numberName(number)}`;
-
 
     image.loading =
         "lazy";
 
 
-    button.appendChild(
-        image
-    );
+    button.appendChild(image);
 
 
     const index =
         photos.length;
 
 
-    photos.push(
-        {
-            source,
-            number
-        }
-    );
+    photos.push({
+
+        source: source,
+
+        number: number
+
+    });
 
 
     button.onclick =
         () => {
 
-            openLightbox(
-                index
-            );
+            openLightbox(index);
 
         };
 
 
-    galleryGrid.appendChild(
-        button
-    );
+    targetGrid.appendChild(button);
 
 }
 
 
 
-/* LIGHTBOX */
+/*
+    LIGHTBOX
+*/
 
 const lightbox =
-    document.getElementById(
-        "lightbox"
-    );
-
+    document.getElementById("lightbox");
 
 const lightboxImage =
-    document.getElementById(
-        "lightboxImage"
-    );
-
+    document.getElementById("lightboxImage");
 
 const photoCounter =
-    document.getElementById(
-        "photoCounter"
-    );
+    document.getElementById("photoCounter");
 
 
+function openLightbox(index) {
 
-function openLightbox(
-    index
-) {
-
-    currentPhoto =
-        index;
-
+    currentPhoto = index;
 
     updateLightbox();
 
-
-    lightbox.classList.add(
-        "open"
-    );
-
+    lightbox.classList.add("open");
 
     document.body.style.overflow =
         "hidden";
@@ -327,13 +298,9 @@ function openLightbox(
 }
 
 
-
 function closeLightbox() {
 
-    lightbox.classList.remove(
-        "open"
-    );
-
+    lightbox.classList.remove("open");
 
     document.body.style.overflow =
         "";
@@ -341,12 +308,9 @@ function closeLightbox() {
 }
 
 
-
 function updateLightbox() {
 
-    if (
-        photos.length === 0
-    ) {
+    if (photos.length === 0) {
 
         return;
 
@@ -354,93 +318,72 @@ function updateLightbox() {
 
 
     lightboxImage.src =
+        photos[currentPhoto].source;
 
-        photos[
-            currentPhoto
-        ].source;
+
+    lightboxImage.alt =
+        `Dan's Audi S1 photo ${numberName(
+            photos[currentPhoto].number
+        )}`;
 
 
     photoCounter.textContent =
-
         `${currentPhoto + 1} / ${photos.length}`;
 
 }
 
 
-
 function nextPhoto() {
 
-
     currentPhoto =
-
-        (
-            currentPhoto + 1
-        )
-
+        (currentPhoto + 1)
         %
-
         photos.length;
-
 
     updateLightbox();
 
 }
 
 
-
 function previousPhoto() {
 
-
     currentPhoto =
-
         (
             currentPhoto
             - 1
             + photos.length
         )
-
         %
-
         photos.length;
-
 
     updateLightbox();
 
 }
 
 
-
 document
-    .getElementById(
-        "closeLightbox"
-    )
+    .getElementById("closeLightbox")
     .onclick =
         closeLightbox;
 
 
 document
-    .getElementById(
-        "nextPhoto"
-    )
+    .getElementById("nextPhoto")
     .onclick =
         nextPhoto;
 
 
 document
-    .getElementById(
-        "previousPhoto"
-    )
+    .getElementById("previousPhoto")
     .onclick =
         previousPhoto;
-
 
 
 lightbox.onclick =
     event => {
 
         if (
-            event.target ===
-            lightbox
+            event.target === lightbox
         ) {
 
             closeLightbox();
@@ -450,5 +393,38 @@ lightbox.onclick =
     };
 
 
+document.addEventListener(
+    "keydown",
+    event => {
 
-loadGallery();
+        if (
+            !lightbox.classList.contains("open")
+        ) {
+
+            return;
+
+        }
+
+        if (event.key === "Escape") {
+
+            closeLightbox();
+
+        }
+
+        if (event.key === "ArrowRight") {
+
+            nextPhoto();
+
+        }
+
+        if (event.key === "ArrowLeft") {
+
+            previousPhoto();
+
+        }
+
+    }
+);
+
+
+loadDiary();
