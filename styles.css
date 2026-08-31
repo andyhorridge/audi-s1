@@ -802,3 +802,26 @@ footer small {
     }
 
 }
+/* DIARY SUBHEADINGS */
+
+.diary-subheading {
+    margin: 35px 0 18px;
+}
+
+.diary-subheading h4 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(18px, 3vw, 25px);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.diary-subheading h4::after {
+    content: "";
+    display: block;
+    width: 55px;
+    height: 2px;
+    margin-top: 10px;
+    background: #e30613;
+}
