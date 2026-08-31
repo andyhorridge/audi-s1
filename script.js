@@ -1,10 +1,7 @@
-const galleryGrid =
-    document.getElementById("galleryGrid");
+const galleryGrid = document.getElementById("galleryGrid");
 
 const photos = [];
-
 let currentPhoto = 0;
-
 
 const extensions = [
     "jpg",
@@ -25,7 +22,6 @@ const extensions = [
 
 const diarySections = [
 
-
     /* ==================================================
        COLLECTION DAY
        19 JULY 2026
@@ -36,13 +32,11 @@ const diarySections = [
         date: "19th July 2026",
 
         items: [
-
             {
                 type: "photos",
                 start: 1,
                 end: 3
             }
-
         ]
     },
 
@@ -68,7 +62,6 @@ const diarySections = [
                 start: 25,
                 end: 28
             },
-
 
             {
                 type: "subheading",
@@ -107,7 +100,6 @@ const diarySections = [
                 end: 24
             },
 
-
             {
                 type: "subheading",
                 title: "Wheel Refurbishment"
@@ -119,12 +111,10 @@ const diarySections = [
                 end: 15
             },
 
-
             {
                 type: "youtube",
                 videoId: "NTnjmzblHOc"
             },
-
 
             {
                 type: "subheading",
@@ -151,13 +141,11 @@ const diarySections = [
         date: "28th August 2026",
 
         items: [
-
             {
                 type: "photos",
                 start: 18,
                 end: 22
             }
-
         ]
     },
 
@@ -172,13 +160,11 @@ const diarySections = [
         date: "29th August 2026",
 
         items: [
-
             {
                 type: "photos",
                 start: 30,
                 end: 31
             }
-
         ]
     },
 
@@ -193,18 +179,15 @@ const diarySections = [
         date: "31st August 2026",
 
         items: [
-
             {
                 type: "photos",
                 start: 32,
                 end: 37
             }
-
         ]
     }
 
 ];
-
 
 
 /* ==================================================
@@ -212,12 +195,8 @@ const diarySections = [
 ================================================== */
 
 function numberName(number) {
-
-    return String(number)
-        .padStart(3, "0");
-
+    return String(number).padStart(3, "0");
 }
-
 
 
 /* ==================================================
@@ -230,19 +209,14 @@ function checkImage(url) {
 
         const image = new Image();
 
-        image.onload =
-            () => resolve(url);
+        image.onload = () => resolve(url);
+        image.onerror = () => resolve(null);
 
-        image.onerror =
-            () => resolve(null);
-
-        image.src =
-            url;
+        image.src = url;
 
     });
 
 }
-
 
 
 /* ==================================================
@@ -251,33 +225,24 @@ function checkImage(url) {
 
 async function findPhoto(number) {
 
-    const formatted =
-        numberName(number);
-
+    const formatted = numberName(number);
 
     for (const extension of extensions) {
 
         const filename =
             `photo${formatted}.${extension}`;
 
-
         const exists =
             await checkImage(filename);
 
-
         if (exists) {
-
             return exists;
-
         }
 
     }
 
-
     return null;
-
 }
-
 
 
 /* ==================================================
@@ -311,14 +276,10 @@ function createDiaryHeading(section) {
 
 
     heading.appendChild(title);
-
     heading.appendChild(date);
 
-
     return heading;
-
 }
-
 
 
 /* ==================================================
@@ -343,11 +304,8 @@ function createSubheading(text) {
 
     wrapper.appendChild(title);
 
-
     return wrapper;
-
 }
-
 
 
 /* ==================================================
@@ -362,11 +320,8 @@ function createPhotoGrid() {
     grid.className =
         "diary-photo-grid";
 
-
     return grid;
-
 }
-
 
 
 /* ==================================================
@@ -385,22 +340,17 @@ function createYouTubeVideo(videoId) {
     const iframe =
         document.createElement("iframe");
 
-
     iframe.src =
         `https://www.youtube.com/embed/${videoId}`;
-
 
     iframe.title =
         "Dan's Audi S1 video";
 
-
     iframe.loading =
         "lazy";
 
-
     iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
 
     iframe.allowFullscreen =
         true;
@@ -408,11 +358,8 @@ function createYouTubeVideo(videoId) {
 
     videoBox.appendChild(iframe);
 
-
     return videoBox;
-
 }
-
 
 
 /* ==================================================
@@ -426,10 +373,8 @@ async function loadDiary() {
 
     for (const section of diarySections) {
 
-
         const diarySection =
             document.createElement("section");
-
 
         diarySection.className =
             "diary-entry";
@@ -438,31 +383,20 @@ async function loadDiary() {
         const heading =
             createDiaryHeading(section);
 
+        diarySection.appendChild(heading);
 
-        diarySection.appendChild(
-            heading
-        );
-
-
-        galleryGrid.appendChild(
-            diarySection
-        );
+        galleryGrid.appendChild(diarySection);
 
 
         for (const item of section.items) {
 
 
-            /* =========================================
-               SUBHEADING
-            ========================================== */
+            /* SUBHEADING */
 
             if (item.type === "subheading") {
 
                 const subheading =
-                    createSubheading(
-                        item.title
-                    );
-
+                    createSubheading(item.title);
 
                 diarySection.appendChild(
                     subheading
@@ -471,15 +405,12 @@ async function loadDiary() {
             }
 
 
-            /* =========================================
-               PHOTOS
-            ========================================== */
+            /* PHOTOS */
 
             if (item.type === "photos") {
 
                 const photoGrid =
                     createPhotoGrid();
-
 
                 diarySection.appendChild(
                     photoGrid
@@ -492,13 +423,10 @@ async function loadDiary() {
                     number++
                 ) {
 
-
                     const image =
                         await findPhoto(number);
 
-
                     if (image) {
-
 
                         addPhoto(
                             image,
@@ -513,26 +441,19 @@ async function loadDiary() {
             }
 
 
-            /* =========================================
-               YOUTUBE
-            ========================================== */
+            /* YOUTUBE */
 
             if (item.type === "youtube") {
 
                 const videoGrid =
                     createPhotoGrid();
 
-
                 const video =
                     createYouTubeVideo(
                         item.videoId
                     );
 
-
-                videoGrid.appendChild(
-                    video
-                );
-
+                videoGrid.appendChild(video);
 
                 diarySection.appendChild(
                     videoGrid
@@ -545,7 +466,6 @@ async function loadDiary() {
     }
 
 }
-
 
 
 /* ==================================================
@@ -561,10 +481,8 @@ function addPhoto(
     const button =
         document.createElement("button");
 
-
     button.className =
         "gallery-item";
-
 
     button.type =
         "button";
@@ -573,22 +491,17 @@ function addPhoto(
     const image =
         document.createElement("img");
 
-
     image.src =
         source;
 
-
     image.alt =
         `Dan's Audi S1 photo ${numberName(number)}`;
-
 
     image.loading =
         "lazy";
 
 
-    button.appendChild(
-        image
-    );
+    button.appendChild(image);
 
 
     const index =
@@ -596,11 +509,8 @@ function addPhoto(
 
 
     photos.push({
-
         source: source,
-
         number: number
-
     });
 
 
@@ -619,28 +529,18 @@ function addPhoto(
 }
 
 
-
 /* ==================================================
    LIGHTBOX ELEMENTS
 ================================================== */
 
 const lightbox =
-    document.getElementById(
-        "lightbox"
-    );
-
+    document.getElementById("lightbox");
 
 const lightboxImage =
-    document.getElementById(
-        "lightboxImage"
-    );
-
+    document.getElementById("lightboxImage");
 
 const photoCounter =
-    document.getElementById(
-        "photoCounter"
-    );
-
+    document.getElementById("photoCounter");
 
 
 /* ==================================================
@@ -652,20 +552,14 @@ function openLightbox(index) {
     currentPhoto =
         index;
 
-
     updateLightbox();
 
-
-    lightbox.classList.add(
-        "open"
-    );
-
+    lightbox.classList.add("open");
 
     document.body.style.overflow =
         "hidden";
 
 }
-
 
 
 /* ==================================================
@@ -674,16 +568,12 @@ function openLightbox(index) {
 
 function closeLightbox() {
 
-    lightbox.classList.remove(
-        "open"
-    );
-
+    lightbox.classList.remove("open");
 
     document.body.style.overflow =
         "";
 
 }
-
 
 
 /* ==================================================
@@ -693,9 +583,7 @@ function closeLightbox() {
 function updateLightbox() {
 
     if (photos.length === 0) {
-
         return;
-
     }
 
 
@@ -719,7 +607,6 @@ function updateLightbox() {
 }
 
 
-
 /* ==================================================
    NEXT PHOTO
 ================================================== */
@@ -731,11 +618,9 @@ function nextPhoto() {
         %
         photos.length;
 
-
     updateLightbox();
 
 }
-
 
 
 /* ==================================================
@@ -753,11 +638,9 @@ function previousPhoto() {
         %
         photos.length;
 
-
     updateLightbox();
 
 }
-
 
 
 /* ==================================================
@@ -786,9 +669,7 @@ lightbox.onclick =
     event => {
 
         if (event.target === lightbox) {
-
             closeLightbox();
-
         }
 
     };
@@ -801,35 +682,26 @@ document.addEventListener(
         if (
             !lightbox.classList.contains("open")
         ) {
-
             return;
-
         }
 
 
         if (event.key === "Escape") {
-
             closeLightbox();
-
         }
 
 
         if (event.key === "ArrowRight") {
-
             nextPhoto();
-
         }
 
 
         if (event.key === "ArrowLeft") {
-
             previousPhoto();
-
         }
 
     }
 );
-
 
 
 /* ==================================================
