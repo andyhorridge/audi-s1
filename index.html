@@ -1,793 +1,431 @@
-const galleryGrid =
-    document.getElementById("galleryGrid");
+<!DOCTYPE html>
+<html lang="en">
 
-const photos = [];
+<head>
 
-let currentPhoto = 0;
+    <meta charset="UTF-8">
 
-const extensions = [
-    "jpg",
-    "JPG",
-    "jpeg",
-    "JPEG",
-    "png",
-    "PNG",
-    "webp",
-    "WEBP"
-];
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
 
-/*
-    DAN'S AUDI S1
-    BUILD DIARY
-*/
+    <title>Dan's Audi S1 | F5 DFH</title>
 
-const diarySections = [
+    <meta
+        name="description"
+        content="Dan's Audi S1 F5 DFH - a personal archive documenting the car, its history, photographs and modifications."
+    >
 
-    /*
-        COLLECTION DAY
-    */
 
-    {
-        title: "Collection Day",
-        date: "19th July 2026",
+    <!-- MAIN STYLES -->
 
-        items: [
+    <link
+        rel="stylesheet"
+        href="styles.css?v=12"
+    >
 
-            {
-                type: "photos",
-                start: 1,
-                end: 3
-            }
 
-        ]
-    },
+    <!-- IPHONE / IPAD HOME SCREEN ICON -->
 
+    <link
+        rel="apple-touch-icon"
+        sizes="180x180"
+        href="apple-touch-icon.png?v=3"
+    >
 
-    /*
-        FRONT END RESPRAY
-    */
 
-    {
-        title: "Front End Respray — Road and Race",
-        date: "11th August 2026",
+    <!-- BROWSER / BOOKMARK ICON -->
 
-        items: [
+    <link
+        rel="icon"
+        type="image/png"
+        href="apple-touch-icon.png?v=3"
+    >
 
-            {
-                type: "subheading",
-                title: "Condition of Front End — Pre Paint"
-            },
 
-            {
-                type: "photos",
-                start: 25,
-                end: 28
-            },
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
 
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Dan's S1"
+    >
 
-            {
-                type: "subheading",
-                title: "Front End Respray"
-            },
+</head>
 
-            {
-                type: "photos",
-                start: 4,
-                end: 7
-            },
 
+<body>
 
-            {
-                type: "subheading",
-                title: "New Grille Fitted & Front End PPF"
-            },
 
-            {
-                type: "photos",
-                start: 18,
-                end: 22
-            }
 
-        ]
-    },
+<!-- ==================================================
+     HERO
+================================================== -->
 
+<header
+    id="home"
+    style="
+        min-height: 100vh;
 
-    /*
-        WHEEL REFURB
-    */
+        background:
+            linear-gradient(
+                90deg,
+                rgba(0,0,0,0.88) 0%,
+                rgba(0,0,0,0.58) 42%,
+                rgba(0,0,0,0.18) 72%,
+                rgba(0,0,0,0.32) 100%
+            ),
+            linear-gradient(
+                0deg,
+                rgba(5,5,5,0.85) 0%,
+                transparent 38%
+            ),
+            url('photo020.jpeg?v=1')
+            center center / cover
+            no-repeat;
 
-    {
-        title: "Wheel Refurb — Radar International",
-        date: "19th August 2026",
+        position: relative;
+    "
+>
 
-        items: [
 
-            {
-                type: "subheading",
-                title: "Car on Stands During Wheel Refurb"
-            },
+    <nav>
 
-            {
-                type: "photos",
-                start: 23,
-                end: 24
-            },
+        <div class="logo">
+            <span>S</span>1
+        </div>
 
 
-            {
-                type: "subheading",
-                title: "Wheel Refurbishment"
-            },
+        <div class="nav-links">
 
-            {
-                type: "photos",
-                start: 8,
-                end: 15
-            },
+            <a href="#car">
+                THE CAR
+            </a>
 
+            <a href="#gallery">
+                DIARY
+            </a>
 
-            /*
-                YOUTUBE VIDEO
-                Positioned after photo015
-            */
+            <a href="#mods">
+                MODS
+            </a>
 
-            {
-                type: "youtube",
-                videoId: "NTnjmzblHOc"
-            },
+        </div>
 
+    </nav>
 
-            {
-                type: "subheading",
-                title: "Finished Wheels"
-            },
 
-            {
-                type: "photos",
-                start: 16,
-                end: 17
-            }
 
-        ]
-    }
+    <div
+        class="hero"
+        style="
+            width: min(1200px, 90%);
+            margin: auto;
+            text-align: left;
+            padding-top: 180px;
+            padding-bottom: 120px;
+        "
+    >
 
-];
 
+        <p class="small-heading">
 
+            AUDI S1 • QUATTRO
 
-/*
-    PHOTO NUMBER FORMAT
-*/
+        </p>
 
-function numberName(number) {
 
-    return String(number)
-        .padStart(3, "0");
 
-}
+        <h1
+            style="
+                max-width: 850px;
+                margin-left: 0;
+            "
+        >
 
+            DAN'S
 
+            <span>
+                AUDI S1
+            </span>
 
-/*
-    CHECK IMAGE EXISTS
-*/
+        </h1>
 
-function checkImage(url) {
 
-    return new Promise(resolve => {
 
-        const image =
-            new Image();
+        <p
+            style="
+                margin: 18px 0 6px;
+                color: #ffffff;
+                font-size: clamp(20px, 3vw, 30px);
+                font-weight: bold;
+                letter-spacing: 4px;
+            "
+        >
 
-        image.onload =
-            () => resolve(url);
+            F5 DFH
 
-        image.onerror =
-            () => resolve(null);
+        </p>
 
-        image.src =
-            url;
 
-    });
 
-}
+        <p
+            class="intro"
+            style="
+                margin-left: 0;
+                max-width: 520px;
+            "
+        >
 
+            A personal archive documenting Dan's Audi S1,
+            its history, modifications and photographs.
 
+        </p>
 
-/*
-    FIND NUMBERED PHOTO
 
-    Supports:
-    photo001.jpg
-    photo001.JPG
-    photo001.jpeg
-    photo001.JPEG
-    etc.
-*/
 
-async function findPhoto(number) {
+        <a
+            class="button"
+            href="#gallery"
+        >
 
-    const formatted =
-        numberName(number);
+            VIEW THE BUILD
 
+        </a>
 
-    for (const extension of extensions) {
 
-        const filename =
-            `photo${formatted}.${extension}`;
+    </div>
 
+</header>
 
-        const exists =
-            await checkImage(filename);
 
 
-        if (exists) {
+<main>
 
-            return exists;
 
-        }
 
-    }
+<section id="car">
 
+    <p class="section-small">
+        THE CAR
+    </p>
 
-    return null;
 
-}
+    <h2>
+        SMALL CAR.<br>
+        BIG CHARACTER.
+    </h2>
 
 
+    <div class="red-line"></div>
 
-/*
-    MAIN DIARY HEADING
-*/
 
-function createDiaryHeading(section) {
 
-    const heading =
-        document.createElement("div");
+    <div class="specs">
 
 
-    heading.className =
-        "diary-heading";
+        <div class="spec-box">
 
+            <strong>
+                S1
+            </strong>
 
-    const title =
-        document.createElement("h3");
+            <span>
+                AUDI SPORT
+            </span>
 
+        </div>
 
-    title.textContent =
-        section.title;
 
 
-    const date =
-        document.createElement("p");
+        <div class="spec-box">
 
+            <strong>
+                QUATTRO
+            </strong>
 
-    date.className =
-        "diary-date";
+            <span>
+                ALL-WHEEL DRIVE
+            </span>
 
+        </div>
 
-    date.textContent =
-        section.date;
 
 
-    heading.appendChild(title);
+        <div class="spec-box">
 
-    heading.appendChild(date);
+            <strong>
+                F5 DFH
+            </strong>
 
+            <span>
+                REGISTRATION
+            </span>
 
-    return heading;
+        </div>
 
-}
 
+    </div>
 
+</section>
 
-/*
-    SMALL SUBHEADING WITHIN
-    A DIARY ENTRY
-*/
 
-function createSubheading(text) {
 
-    const wrapper =
-        document.createElement("div");
+<section id="gallery">
 
+    <p class="section-small">
+        BUILD DIARY
+    </p>
 
-    wrapper.className =
-        "diary-subheading";
 
+    <h2>
+        DAN'S S1
+    </h2>
 
-    const title =
-        document.createElement("h4");
 
+    <div class="red-line"></div>
 
-    title.textContent =
-        text;
 
+    <div id="galleryGrid">
+    </div>
 
-    wrapper.appendChild(title);
+</section>
 
 
-    return wrapper;
 
-}
+<section id="mods">
 
+    <p class="section-small">
+        THE BUILD
+    </p>
 
 
-/*
-    CREATE PHOTO GRID
-*/
+    <h2>
+        MODIFICATIONS
+    </h2>
 
-function createPhotoGrid() {
 
-    const grid =
-        document.createElement("div");
+    <div class="red-line"></div>
 
 
-    grid.className =
-        "diary-photo-grid";
 
+    <div class="mods-box">
 
-    return grid;
+        <h3>
+            BUILD LIST
+        </h3>
 
-}
 
+        <p>
+            Dan's modifications and upgrades will be
+            documented here as the car evolves.
+        </p>
 
+    </div>
 
-/*
-    YOUTUBE VIDEO
-*/
+</section>
 
-function createYouTubeVideo(videoId) {
 
-    const videoBox =
-        document.createElement("div");
+</main>
 
 
-    videoBox.className =
-        "diary-video";
 
+<div
+    id="lightbox"
+    class="lightbox"
+>
 
-    const iframe =
-        document.createElement("iframe");
 
+    <button
+        id="closeLightbox"
+        class="close"
+        type="button"
+        aria-label="Close photo"
+    >
 
-    iframe.src =
-        `https://www.youtube.com/embed/${videoId}`;
+        ×
 
+    </button>
 
-    iframe.title =
-        "Dan's Audi S1 video";
 
 
-    iframe.loading =
-        "lazy";
+    <button
+        id="previousPhoto"
+        class="previous"
+        type="button"
+        aria-label="Previous photo"
+    >
 
+        ‹
 
-    iframe.allow =
-        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    </button>
 
 
-    iframe.allowFullscreen =
-        true;
 
+    <img
+        id="lightboxImage"
+        alt="Dan's Audi S1 photograph"
+    >
 
-    videoBox.appendChild(iframe);
 
 
-    return videoBox;
+    <button
+        id="nextPhoto"
+        class="next"
+        type="button"
+        aria-label="Next photo"
+    >
 
-}
+        ›
 
+    </button>
 
 
-/*
-    LOAD COMPLETE DIARY
-*/
 
-async function loadDiary() {
+    <div
+        id="photoCounter"
+        class="photo-counter"
+    >
+    </div>
 
-    galleryGrid.innerHTML = "";
 
+</div>
 
-    for (const section of diarySections) {
 
 
-        const diarySection =
-            document.createElement("section");
+<footer>
 
+    <div class="footer-logo">
 
-        diarySection.className =
-            "diary-entry";
+        <span>S</span>1
 
+    </div>
 
-        const heading =
-            createDiaryHeading(section);
 
+    <p>
+        Dan's Audi S1
+    </p>
 
-        diarySection.appendChild(heading);
 
+    <small>
+        F5 DFH • audi-s1.uk
+    </small>
 
-        galleryGrid.appendChild(
-            diarySection
-        );
+</footer>
 
 
-        /*
-            Items are deliberately loaded
-            in the exact order listed above.
-        */
 
-        for (const item of section.items) {
+<script src="script.js?v=13"></script>
 
 
-            /*
-                SUBHEADING
-            */
+</body>
 
-            if (item.type === "subheading") {
-
-                const subheading =
-                    createSubheading(
-                        item.title
-                    );
-
-
-                diarySection.appendChild(
-                    subheading
-                );
-
-            }
-
-
-
-            /*
-                PHOTOS
-            */
-
-            if (item.type === "photos") {
-
-                const photoGrid =
-                    createPhotoGrid();
-
-
-                diarySection.appendChild(
-                    photoGrid
-                );
-
-
-                for (
-                    let number = item.start;
-                    number <= item.end;
-                    number++
-                ) {
-
-
-                    const image =
-                        await findPhoto(number);
-
-
-                    if (image) {
-
-
-                        addPhoto(
-                            image,
-                            number,
-                            photoGrid
-                        );
-
-
-                    }
-
-                }
-
-            }
-
-
-
-            /*
-                YOUTUBE
-            */
-
-            if (item.type === "youtube") {
-
-                const videoGrid =
-                    createPhotoGrid();
-
-
-                const video =
-                    createYouTubeVideo(
-                        item.videoId
-                    );
-
-
-                videoGrid.appendChild(
-                    video
-                );
-
-
-                diarySection.appendChild(
-                    videoGrid
-                );
-
-            }
-
-        }
-
-    }
-
-}
-
-
-
-/*
-    ADD PHOTO TILE
-*/
-
-function addPhoto(
-    source,
-    number,
-    targetGrid
-) {
-
-    const button =
-        document.createElement("button");
-
-
-    button.className =
-        "gallery-item";
-
-
-    button.type =
-        "button";
-
-
-    const image =
-        document.createElement("img");
-
-
-    image.src =
-        source;
-
-
-    image.alt =
-        `Dan's Audi S1 photo ${numberName(number)}`;
-
-
-    image.loading =
-        "lazy";
-
-
-    button.appendChild(
-        image
-    );
-
-
-    const index =
-        photos.length;
-
-
-    photos.push({
-
-        source: source,
-
-        number: number
-
-    });
-
-
-    button.onclick =
-        () => {
-
-            openLightbox(index);
-
-        };
-
-
-    targetGrid.appendChild(
-        button
-    );
-
-}
-
-
-
-/*
-    LIGHTBOX
-*/
-
-const lightbox =
-    document.getElementById(
-        "lightbox"
-    );
-
-
-const lightboxImage =
-    document.getElementById(
-        "lightboxImage"
-    );
-
-
-const photoCounter =
-    document.getElementById(
-        "photoCounter"
-    );
-
-
-
-function openLightbox(index) {
-
-    currentPhoto =
-        index;
-
-
-    updateLightbox();
-
-
-    lightbox.classList.add(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "hidden";
-
-}
-
-
-
-function closeLightbox() {
-
-    lightbox.classList.remove(
-        "open"
-    );
-
-
-    document.body.style.overflow =
-        "";
-
-}
-
-
-
-function updateLightbox() {
-
-    if (photos.length === 0) {
-
-        return;
-
-    }
-
-
-    lightboxImage.src =
-        photos[currentPhoto].source;
-
-
-    lightboxImage.alt =
-        `Dan's Audi S1 photo ${numberName(
-            photos[currentPhoto].number
-        )}`;
-
-
-    if (photoCounter) {
-
-        photoCounter.textContent =
-            `${currentPhoto + 1} / ${photos.length}`;
-
-    }
-
-}
-
-
-
-function nextPhoto() {
-
-    currentPhoto =
-        (currentPhoto + 1)
-        %
-        photos.length;
-
-
-    updateLightbox();
-
-}
-
-
-
-function previousPhoto() {
-
-    currentPhoto =
-        (
-            currentPhoto
-            - 1
-            + photos.length
-        )
-        %
-        photos.length;
-
-
-    updateLightbox();
-
-}
-
-
-
-/*
-    LIGHTBOX BUTTONS
-*/
-
-document
-    .getElementById("closeLightbox")
-    .onclick =
-        closeLightbox;
-
-
-document
-    .getElementById("nextPhoto")
-    .onclick =
-        nextPhoto;
-
-
-document
-    .getElementById("previousPhoto")
-    .onclick =
-        previousPhoto;
-
-
-
-lightbox.onclick =
-    event => {
-
-        if (event.target === lightbox) {
-
-            closeLightbox();
-
-        }
-
-    };
-
-
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            !lightbox.classList.contains("open")
-        ) {
-
-            return;
-
-        }
-
-
-        if (event.key === "Escape") {
-
-            closeLightbox();
-
-        }
-
-
-        if (event.key === "ArrowRight") {
-
-            nextPhoto();
-
-        }
-
-
-        if (event.key === "ArrowLeft") {
-
-            previousPhoto();
-
-        }
-
-    }
-);
-
-
-
-/*
-    START
-*/
-
-loadDiary();
+</html>
