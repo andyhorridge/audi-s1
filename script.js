@@ -1,11 +1,9 @@
 const galleryGrid =
     document.getElementById("galleryGrid");
 
-
 const photos = [];
 
 let currentPhoto = 0;
-
 
 const extensions = [
     "jpg",
@@ -17,7 +15,6 @@ const extensions = [
     "webp",
     "WEBP"
 ];
-
 
 
 /*
@@ -32,13 +29,11 @@ const diarySections = [
         date: "19th July 2026",
 
         items: [
-
             {
                 type: "photos",
                 start: 1,
                 end: 3
             }
-
         ]
     },
 
@@ -50,9 +45,36 @@ const diarySections = [
         items: [
 
             {
+                type: "subheading",
+                title: "Condition of Front End — Pre Paint"
+            },
+
+            {
+                type: "photos",
+                start: 25,
+                end: 28
+            },
+
+            {
+                type: "subheading",
+                title: "Front End Respray"
+            },
+
+            {
                 type: "photos",
                 start: 4,
                 end: 7
+            },
+
+            {
+                type: "subheading",
+                title: "New Grille Fitted & Front End PPF"
+            },
+
+            {
+                type: "photos",
+                start: 18,
+                end: 22
             }
 
         ]
@@ -66,6 +88,22 @@ const diarySections = [
         items: [
 
             {
+                type: "subheading",
+                title: "Car on Stands During Wheel Refurb"
+            },
+
+            {
+                type: "photos",
+                start: 23,
+                end: 24
+            },
+
+            {
+                type: "subheading",
+                title: "Wheel Refurbishment"
+            },
+
+            {
                 type: "photos",
                 start: 8,
                 end: 15
@@ -74,6 +112,11 @@ const diarySections = [
             {
                 type: "youtube",
                 videoId: "NTnjmzblHOc"
+            },
+
+            {
+                type: "subheading",
+                title: "Finished Wheels"
             },
 
             {
@@ -88,43 +131,25 @@ const diarySections = [
 ];
 
 
-
 function numberName(number) {
-
-    return String(number)
-        .padStart(3, "0");
-
+    return String(number).padStart(3, "0");
 }
-
 
 
 function checkImage(url) {
 
-    return new Promise(
-        resolve => {
+    return new Promise(resolve => {
 
-            const image =
-                new Image();
+        const image = new Image();
 
+        image.onload = () => resolve(url);
 
-            image.onload =
-                () =>
-                    resolve(url);
+        image.onerror = () => resolve(null);
 
+        image.src = url;
 
-            image.onerror =
-                () =>
-                    resolve(null);
-
-
-            image.src =
-                url;
-
-        }
-    );
-
+    });
 }
-
 
 
 async function findPhoto(number) {
@@ -132,40 +157,28 @@ async function findPhoto(number) {
     const formatted =
         numberName(number);
 
-
-    for (
-        const extension
-        of extensions
-    ) {
+    for (const extension of extensions) {
 
         const filename =
             `photo${formatted}.${extension}`;
 
-
         const exists =
             await checkImage(filename);
 
-
         if (exists) {
-
             return exists;
-
         }
 
     }
 
-
     return null;
-
 }
-
 
 
 function createDiaryHeading(section) {
 
     const heading =
         document.createElement("div");
-
 
     heading.className =
         "diary-heading";
@@ -174,7 +187,6 @@ function createDiaryHeading(section) {
     const title =
         document.createElement("h3");
 
-
     title.textContent =
         section.title;
 
@@ -182,24 +194,40 @@ function createDiaryHeading(section) {
     const date =
         document.createElement("p");
 
-
     date.className =
         "diary-date";
-
 
     date.textContent =
         section.date;
 
 
     heading.appendChild(title);
-
     heading.appendChild(date);
 
-
     return heading;
-
 }
 
+
+function createSubheading(text) {
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "diary-subheading";
+
+
+    const title =
+        document.createElement("h4");
+
+    title.textContent =
+        text;
+
+
+    wrapper.appendChild(title);
+
+    return wrapper;
+}
 
 
 function createPhotoGrid() {
@@ -207,26 +235,17 @@ function createPhotoGrid() {
     const grid =
         document.createElement("div");
 
-
     grid.className =
         "diary-photo-grid";
 
-
     return grid;
-
 }
 
-
-
-/*
-    CREATE YOUTUBE TILE
-*/
 
 function createYouTubeVideo(videoId) {
 
     const videoBox =
         document.createElement("div");
-
 
     videoBox.className =
         "diary-video";
@@ -235,22 +254,17 @@ function createYouTubeVideo(videoId) {
     const iframe =
         document.createElement("iframe");
 
-
     iframe.src =
         `https://www.youtube.com/embed/${videoId}`;
 
-
     iframe.title =
-        "Dan's Audi S1 Wheel Refurb video";
-
+        "Dan's Audi S1 video";
 
     iframe.loading =
         "lazy";
 
-
     iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
 
     iframe.allowFullscreen =
         true;
@@ -258,11 +272,8 @@ function createYouTubeVideo(videoId) {
 
     videoBox.appendChild(iframe);
 
-
     return videoBox;
-
 }
-
 
 
 async function loadDiary() {
@@ -270,15 +281,10 @@ async function loadDiary() {
     galleryGrid.innerHTML = "";
 
 
-    for (
-        const section
-        of diarySections
-    ) {
-
+    for (const section of diarySections) {
 
         const diarySection =
             document.createElement("section");
-
 
         diarySection.className =
             "diary-entry";
@@ -287,39 +293,40 @@ async function loadDiary() {
         const heading =
             createDiaryHeading(section);
 
-
-        const photoGrid =
-            createPhotoGrid();
-
-
-        diarySection.appendChild(heading);
-
-        diarySection.appendChild(photoGrid);
-
+        diarySection.appendChild(
+            heading
+        );
 
         galleryGrid.appendChild(
             diarySection
         );
 
 
-        /*
-            LOAD EACH ITEM IN THE EXACT
-            ORDER LISTED ABOVE
-        */
-
-        for (
-            const item
-            of section.items
-        ) {
+        for (const item of section.items) {
 
 
-            /*
-                PHOTOS
-            */
+            if (item.type === "subheading") {
 
-            if (
-                item.type === "photos"
-            ) {
+                const subheading =
+                    createSubheading(
+                        item.title
+                    );
+
+                diarySection.appendChild(
+                    subheading
+                );
+
+            }
+
+
+            if (item.type === "photos") {
+
+                const photoGrid =
+                    createPhotoGrid();
+
+                diarySection.appendChild(
+                    photoGrid
+                );
 
 
                 for (
@@ -328,20 +335,16 @@ async function loadDiary() {
                     number++
                 ) {
 
-
                     const image =
                         await findPhoto(number);
 
-
                     if (image) {
-
 
                         addPhoto(
                             image,
                             number,
                             photoGrid
                         );
-
 
                     }
 
@@ -350,24 +353,22 @@ async function loadDiary() {
             }
 
 
+            if (item.type === "youtube") {
 
-            /*
-                YOUTUBE VIDEO
-            */
-
-            if (
-                item.type === "youtube"
-            ) {
-
+                const videoGrid =
+                    createPhotoGrid();
 
                 const video =
                     createYouTubeVideo(
                         item.videoId
                     );
 
-
-                photoGrid.appendChild(
+                videoGrid.appendChild(
                     video
+                );
+
+                diarySection.appendChild(
+                    videoGrid
                 );
 
             }
@@ -379,21 +380,17 @@ async function loadDiary() {
 }
 
 
-
 function addPhoto(
     source,
     number,
     targetGrid
 ) {
 
-
     const button =
         document.createElement("button");
 
-
     button.className =
         "gallery-item";
-
 
     button.type =
         "button";
@@ -402,22 +399,17 @@ function addPhoto(
     const image =
         document.createElement("img");
 
-
     image.src =
         source;
 
-
     image.alt =
         `Dan's Audi S1 photo ${numberName(number)}`;
-
 
     image.loading =
         "lazy";
 
 
-    button.appendChild(
-        image
-    );
+    button.appendChild(image);
 
 
     const index =
@@ -425,13 +417,8 @@ function addPhoto(
 
 
     photos.push({
-
-        source:
-            source,
-
-        number:
-            number
-
+        source: source,
+        number: number
     });
 
 
@@ -446,9 +433,7 @@ function addPhoto(
     targetGrid.appendChild(
         button
     );
-
 }
-
 
 
 /*
@@ -456,22 +441,13 @@ function addPhoto(
 */
 
 const lightbox =
-    document.getElementById(
-        "lightbox"
-    );
-
+    document.getElementById("lightbox");
 
 const lightboxImage =
-    document.getElementById(
-        "lightboxImage"
-    );
-
+    document.getElementById("lightboxImage");
 
 const photoCounter =
-    document.getElementById(
-        "photoCounter"
-    );
-
+    document.getElementById("photoCounter");
 
 
 function openLightbox(index) {
@@ -479,20 +455,15 @@ function openLightbox(index) {
     currentPhoto =
         index;
 
-
     updateLightbox();
-
 
     lightbox.classList.add(
         "open"
     );
 
-
     document.body.style.overflow =
         "hidden";
-
 }
-
 
 
 function closeLightbox() {
@@ -501,28 +472,19 @@ function closeLightbox() {
         "open"
     );
 
-
     document.body.style.overflow =
         "";
-
 }
-
 
 
 function updateLightbox() {
 
-    if (
-        photos.length === 0
-    ) {
-
+    if (photos.length === 0) {
         return;
-
     }
-
 
     lightboxImage.src =
         photos[currentPhoto].source;
-
 
     lightboxImage.alt =
         `Dan's Audi S1 photo ${numberName(
@@ -536,137 +498,87 @@ function updateLightbox() {
             `${currentPhoto + 1} / ${photos.length}`;
 
     }
-
 }
-
 
 
 function nextPhoto() {
 
     currentPhoto =
-
-        (
-            currentPhoto + 1
-        )
-
+        (currentPhoto + 1)
         %
-
         photos.length;
 
-
     updateLightbox();
-
 }
-
 
 
 function previousPhoto() {
 
     currentPhoto =
-
         (
             currentPhoto
             - 1
             + photos.length
         )
-
         %
-
         photos.length;
 
-
     updateLightbox();
-
 }
 
 
-
 document
-    .getElementById(
-        "closeLightbox"
-    )
+    .getElementById("closeLightbox")
     .onclick =
         closeLightbox;
 
 
 document
-    .getElementById(
-        "nextPhoto"
-    )
+    .getElementById("nextPhoto")
     .onclick =
         nextPhoto;
 
 
 document
-    .getElementById(
-        "previousPhoto"
-    )
+    .getElementById("previousPhoto")
     .onclick =
         previousPhoto;
-
 
 
 lightbox.onclick =
     event => {
 
-        if (
-            event.target ===
-            lightbox
-        ) {
-
+        if (event.target === lightbox) {
             closeLightbox();
-
         }
 
     };
-
 
 
 document.addEventListener(
     "keydown",
     event => {
 
-
         if (
-            !lightbox.classList.contains(
-                "open"
-            )
+            !lightbox.classList.contains("open")
         ) {
-
             return;
-
         }
 
-
-        if (
-            event.key === "Escape"
-        ) {
-
+        if (event.key === "Escape") {
             closeLightbox();
-
         }
 
-
-        if (
-            event.key === "ArrowRight"
-        ) {
-
+        if (event.key === "ArrowRight") {
             nextPhoto();
-
         }
 
-
-        if (
-            event.key === "ArrowLeft"
-        ) {
-
+        if (event.key === "ArrowLeft") {
             previousPhoto();
-
         }
 
     }
 );
-
 
 
 loadDiary();
