@@ -5,6 +5,7 @@ const photos = [];
 
 let currentPhoto = 0;
 
+
 const extensions = [
     "jpg",
     "JPG",
@@ -17,26 +18,39 @@ const extensions = [
 ];
 
 
-/*
-    DAN'S AUDI S1
-    BUILD DIARY
-*/
+/* ==================================================
+   DAN'S AUDI S1
+   BUILD DIARY
+================================================== */
 
 const diarySections = [
+
+
+    /* ==================================================
+       COLLECTION DAY
+       19 JULY 2026
+    ================================================== */
 
     {
         title: "Collection Day",
         date: "19th July 2026",
 
         items: [
+
             {
                 type: "photos",
                 start: 1,
                 end: 3
             }
+
         ]
     },
 
+
+    /* ==================================================
+       FRONT END RESPRAY
+       11 AUGUST 2026
+    ================================================== */
 
     {
         title: "Front End Respray — Road and Race",
@@ -55,6 +69,7 @@ const diarySections = [
                 end: 28
             },
 
+
             {
                 type: "subheading",
                 title: "Front End Respray"
@@ -64,22 +79,16 @@ const diarySections = [
                 type: "photos",
                 start: 4,
                 end: 7
-            },
-
-            {
-                type: "subheading",
-                title: "New Grille Fitted & Front End PPF"
-            },
-
-            {
-                type: "photos",
-                start: 18,
-                end: 22
             }
 
         ]
     },
 
+
+    /* ==================================================
+       WHEEL REFURB
+       19 AUGUST 2026
+    ================================================== */
 
     {
         title: "Wheel Refurb — Radar International",
@@ -89,7 +98,7 @@ const diarySections = [
 
             {
                 type: "subheading",
-                title: "Car on Stands During Wheel Refurb"
+                title: "Car on Stands — Pre Wheel Refurb"
             },
 
             {
@@ -97,6 +106,7 @@ const diarySections = [
                 start: 23,
                 end: 24
             },
+
 
             {
                 type: "subheading",
@@ -109,10 +119,12 @@ const diarySections = [
                 end: 15
             },
 
+
             {
                 type: "youtube",
                 videoId: "NTnjmzblHOc"
             },
+
 
             {
                 type: "subheading",
@@ -126,15 +138,91 @@ const diarySections = [
             }
 
         ]
+    },
+
+
+    /* ==================================================
+       QUATTRO FRONT GRILLE + FRONT END PPF
+       28 AUGUST 2026
+    ================================================== */
+
+    {
+        title: "Quattro Front Grille & Front End PPF",
+        date: "28th August 2026",
+
+        items: [
+
+            {
+                type: "photos",
+                start: 18,
+                end: 22
+            }
+
+        ]
+    },
+
+
+    /* ==================================================
+       PORSCHE FUEL FILLER CAP
+       29 AUGUST 2026
+    ================================================== */
+
+    {
+        title: "Porsche Fuel Filler Cap",
+        date: "29th August 2026",
+
+        items: [
+
+            {
+                type: "photos",
+                start: 30,
+                end: 31
+            }
+
+        ]
+    },
+
+
+    /* ==================================================
+       REAR WIPER DELETE
+       31 AUGUST 2026
+    ================================================== */
+
+    {
+        title: "Rear Wiper Delete",
+        date: "31st August 2026",
+
+        items: [
+
+            {
+                type: "photos",
+                start: 32,
+                end: 37
+            }
+
+        ]
     }
 
 ];
 
 
+
+/* ==================================================
+   PHOTO NUMBER FORMAT
+================================================== */
+
 function numberName(number) {
-    return String(number).padStart(3, "0");
+
+    return String(number)
+        .padStart(3, "0");
+
 }
 
+
+
+/* ==================================================
+   CHECK IF IMAGE EXISTS
+================================================== */
 
 function checkImage(url) {
 
@@ -142,38 +230,59 @@ function checkImage(url) {
 
         const image = new Image();
 
-        image.onload = () => resolve(url);
+        image.onload =
+            () => resolve(url);
 
-        image.onerror = () => resolve(null);
+        image.onerror =
+            () => resolve(null);
 
-        image.src = url;
+        image.src =
+            url;
 
     });
+
 }
 
+
+
+/* ==================================================
+   FIND NUMBERED PHOTO
+================================================== */
 
 async function findPhoto(number) {
 
     const formatted =
         numberName(number);
 
+
     for (const extension of extensions) {
 
         const filename =
             `photo${formatted}.${extension}`;
 
+
         const exists =
             await checkImage(filename);
 
+
         if (exists) {
+
             return exists;
+
         }
 
     }
 
+
     return null;
+
 }
 
+
+
+/* ==================================================
+   CREATE MAIN DIARY HEADING
+================================================== */
 
 function createDiaryHeading(section) {
 
@@ -202,11 +311,19 @@ function createDiaryHeading(section) {
 
 
     heading.appendChild(title);
+
     heading.appendChild(date);
 
+
     return heading;
+
 }
 
+
+
+/* ==================================================
+   CREATE DIARY SUBHEADING
+================================================== */
 
 function createSubheading(text) {
 
@@ -226,9 +343,16 @@ function createSubheading(text) {
 
     wrapper.appendChild(title);
 
+
     return wrapper;
+
 }
 
+
+
+/* ==================================================
+   CREATE PHOTO GRID
+================================================== */
 
 function createPhotoGrid() {
 
@@ -238,9 +362,16 @@ function createPhotoGrid() {
     grid.className =
         "diary-photo-grid";
 
+
     return grid;
+
 }
 
+
+
+/* ==================================================
+   CREATE YOUTUBE VIDEO
+================================================== */
 
 function createYouTubeVideo(videoId) {
 
@@ -254,17 +385,22 @@ function createYouTubeVideo(videoId) {
     const iframe =
         document.createElement("iframe");
 
+
     iframe.src =
         `https://www.youtube.com/embed/${videoId}`;
+
 
     iframe.title =
         "Dan's Audi S1 video";
 
+
     iframe.loading =
         "lazy";
 
+
     iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
 
     iframe.allowFullscreen =
         true;
@@ -272,9 +408,16 @@ function createYouTubeVideo(videoId) {
 
     videoBox.appendChild(iframe);
 
+
     return videoBox;
+
 }
 
+
+
+/* ==================================================
+   LOAD COMPLETE BUILD DIARY
+================================================== */
 
 async function loadDiary() {
 
@@ -283,8 +426,10 @@ async function loadDiary() {
 
     for (const section of diarySections) {
 
+
         const diarySection =
             document.createElement("section");
+
 
         diarySection.className =
             "diary-entry";
@@ -293,9 +438,11 @@ async function loadDiary() {
         const heading =
             createDiaryHeading(section);
 
+
         diarySection.appendChild(
             heading
         );
+
 
         galleryGrid.appendChild(
             diarySection
@@ -305,12 +452,17 @@ async function loadDiary() {
         for (const item of section.items) {
 
 
+            /* =========================================
+               SUBHEADING
+            ========================================== */
+
             if (item.type === "subheading") {
 
                 const subheading =
                     createSubheading(
                         item.title
                     );
+
 
                 diarySection.appendChild(
                     subheading
@@ -319,10 +471,15 @@ async function loadDiary() {
             }
 
 
+            /* =========================================
+               PHOTOS
+            ========================================== */
+
             if (item.type === "photos") {
 
                 const photoGrid =
                     createPhotoGrid();
+
 
                 diarySection.appendChild(
                     photoGrid
@@ -335,10 +492,13 @@ async function loadDiary() {
                     number++
                 ) {
 
+
                     const image =
                         await findPhoto(number);
 
+
                     if (image) {
+
 
                         addPhoto(
                             image,
@@ -353,19 +513,26 @@ async function loadDiary() {
             }
 
 
+            /* =========================================
+               YOUTUBE
+            ========================================== */
+
             if (item.type === "youtube") {
 
                 const videoGrid =
                     createPhotoGrid();
+
 
                 const video =
                     createYouTubeVideo(
                         item.videoId
                     );
 
+
                 videoGrid.appendChild(
                     video
                 );
+
 
                 diarySection.appendChild(
                     videoGrid
@@ -380,6 +547,11 @@ async function loadDiary() {
 }
 
 
+
+/* ==================================================
+   ADD PHOTO TO GALLERY
+================================================== */
+
 function addPhoto(
     source,
     number,
@@ -389,8 +561,10 @@ function addPhoto(
     const button =
         document.createElement("button");
 
+
     button.className =
         "gallery-item";
+
 
     button.type =
         "button";
@@ -399,17 +573,22 @@ function addPhoto(
     const image =
         document.createElement("img");
 
+
     image.src =
         source;
 
+
     image.alt =
         `Dan's Audi S1 photo ${numberName(number)}`;
+
 
     image.loading =
         "lazy";
 
 
-    button.appendChild(image);
+    button.appendChild(
+        image
+    );
 
 
     const index =
@@ -417,8 +596,11 @@ function addPhoto(
 
 
     photos.push({
+
         source: source,
+
         number: number
+
     });
 
 
@@ -433,38 +615,62 @@ function addPhoto(
     targetGrid.appendChild(
         button
     );
+
 }
 
 
-/*
-    LIGHTBOX
-*/
+
+/* ==================================================
+   LIGHTBOX ELEMENTS
+================================================== */
 
 const lightbox =
-    document.getElementById("lightbox");
+    document.getElementById(
+        "lightbox"
+    );
+
 
 const lightboxImage =
-    document.getElementById("lightboxImage");
+    document.getElementById(
+        "lightboxImage"
+    );
+
 
 const photoCounter =
-    document.getElementById("photoCounter");
+    document.getElementById(
+        "photoCounter"
+    );
 
+
+
+/* ==================================================
+   OPEN LIGHTBOX
+================================================== */
 
 function openLightbox(index) {
 
     currentPhoto =
         index;
 
+
     updateLightbox();
+
 
     lightbox.classList.add(
         "open"
     );
 
+
     document.body.style.overflow =
         "hidden";
+
 }
 
+
+
+/* ==================================================
+   CLOSE LIGHTBOX
+================================================== */
 
 function closeLightbox() {
 
@@ -472,19 +678,30 @@ function closeLightbox() {
         "open"
     );
 
+
     document.body.style.overflow =
         "";
+
 }
 
+
+
+/* ==================================================
+   UPDATE LIGHTBOX IMAGE
+================================================== */
 
 function updateLightbox() {
 
     if (photos.length === 0) {
+
         return;
+
     }
+
 
     lightboxImage.src =
         photos[currentPhoto].source;
+
 
     lightboxImage.alt =
         `Dan's Audi S1 photo ${numberName(
@@ -498,8 +715,14 @@ function updateLightbox() {
             `${currentPhoto + 1} / ${photos.length}`;
 
     }
+
 }
 
+
+
+/* ==================================================
+   NEXT PHOTO
+================================================== */
 
 function nextPhoto() {
 
@@ -508,9 +731,16 @@ function nextPhoto() {
         %
         photos.length;
 
+
     updateLightbox();
+
 }
 
+
+
+/* ==================================================
+   PREVIOUS PHOTO
+================================================== */
 
 function previousPhoto() {
 
@@ -523,9 +753,16 @@ function previousPhoto() {
         %
         photos.length;
 
+
     updateLightbox();
+
 }
 
+
+
+/* ==================================================
+   LIGHTBOX CONTROLS
+================================================== */
 
 document
     .getElementById("closeLightbox")
@@ -549,7 +786,9 @@ lightbox.onclick =
     event => {
 
         if (event.target === lightbox) {
+
             closeLightbox();
+
         }
 
     };
@@ -562,23 +801,39 @@ document.addEventListener(
         if (
             !lightbox.classList.contains("open")
         ) {
+
             return;
+
         }
+
 
         if (event.key === "Escape") {
+
             closeLightbox();
+
         }
+
 
         if (event.key === "ArrowRight") {
+
             nextPhoto();
+
         }
 
+
         if (event.key === "ArrowLeft") {
+
             previousPhoto();
+
         }
 
     }
 );
 
+
+
+/* ==================================================
+   START BUILD DIARY
+================================================== */
 
 loadDiary();
