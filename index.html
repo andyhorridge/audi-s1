@@ -38,7 +38,7 @@
 
     <link
         rel="stylesheet"
-        href="styles.css?v=13"
+        href="styles.css?v=15"
     >
 
 
@@ -48,13 +48,13 @@
 
     <link
         rel="apple-touch-icon"
-        href="photo020.jpeg?v=5"
+        href="photo020.jpeg?v=6"
     >
 
     <link
         rel="icon"
         type="image/jpeg"
-        href="photo020.jpeg?v=5"
+        href="photo020.jpeg?v=6"
     >
 
     <meta
@@ -99,12 +99,12 @@
 
     <meta
         property="og:image"
-        content="https://audi-s1.uk/photo020.jpeg?v=5"
+        content="https://audi-s1.uk/photo020.jpeg?v=6"
     >
 
     <meta
         property="og:image:secure_url"
-        content="https://audi-s1.uk/photo020.jpeg?v=5"
+        content="https://audi-s1.uk/photo020.jpeg?v=6"
     >
 
 
@@ -129,7 +129,7 @@
 
     <meta
         name="twitter:image"
-        content="https://audi-s1.uk/photo020.jpeg?v=5"
+        content="https://audi-s1.uk/photo020.jpeg?v=6"
     >
 
 </head>
@@ -161,7 +161,7 @@
                 rgba(5,5,5,0.85) 0%,
                 transparent 38%
             ),
-            url('photo020.jpeg?v=5')
+            url('photo020.jpeg?v=6')
             center center / cover
             no-repeat;
 
@@ -297,7 +297,6 @@
 
     <div class="specs">
 
-
         <div class="spec-box">
 
             <strong>
@@ -336,7 +335,6 @@
 
         </div>
 
-
     </div>
 
 </section>
@@ -344,7 +342,7 @@
 
 <!-- ==================================================
      BUILD DIARY / PHOTO GALLERY
-     PHOTOS + YOUTUBE ARE LOADED BY script.js
+     ALL DATES + PHOTOS ARE LOADED BY script.js
 ================================================== -->
 
 <section id="gallery">
@@ -361,18 +359,6 @@
 
     <div class="red-line"></div>
 
-
-    <!--
-        DO NOT MANUALLY ADD PHOTOS HERE.
-
-        script.js loads:
-        - Collection Day
-        - Front End Respray
-        - PPF / Grille
-        - Wheel Refurb
-        - YouTube clip
-        - Future diary entries
-    -->
 
     <div id="galleryGrid">
     </div>
@@ -401,7 +387,7 @@
 
     <!-- ==================================================
          BUILD LIST
-         EDIT THIS SECTION WHEN NEW MODS ARE ADDED
+         EDIT HERE WHEN NEW MODIFICATIONS ARE ADDED
     ================================================== -->
 
     <div class="mods-box">
@@ -410,19 +396,24 @@
             BUILD LIST
         </h3>
 
-
         <p>
             Front End PPF
         </p>
-
 
         <p>
             Wheel Refurbishment
         </p>
 
-
         <p>
             Quattro Front Grille
+        </p>
+
+        <p>
+            Porsche Fuel Filler Cap
+        </p>
+
+        <p>
+            Rear Wiper Delete
         </p>
 
     </div>
@@ -435,16 +426,12 @@
 
 <!-- ==================================================
      PHOTO LIGHTBOX
-     OPENS PHOTOS FULL SCREEN
 ================================================== -->
 
 <div
     id="lightbox"
     class="lightbox"
 >
-
-
-    <!-- CLOSE BUTTON -->
 
     <button
         id="closeLightbox"
@@ -456,8 +443,6 @@
     </button>
 
 
-    <!-- PREVIOUS PHOTO -->
-
     <button
         id="previousPhoto"
         class="previous"
@@ -468,15 +453,11 @@
     </button>
 
 
-    <!-- CURRENT PHOTO -->
-
     <img
         id="lightboxImage"
         alt="Dan's Audi S1 photograph"
     >
 
-
-    <!-- NEXT PHOTO -->
 
     <button
         id="nextPhoto"
@@ -488,14 +469,11 @@
     </button>
 
 
-    <!-- PHOTO COUNTER -->
-
     <div
         id="photoCounter"
         class="photo-counter"
     >
     </div>
-
 
 </div>
 
@@ -525,10 +503,10 @@
 
 <!-- ==================================================
      BUILD DIARY JAVASCRIPT
-     CHANGE ?v= NUMBER IF YOU NEED TO FORCE A REFRESH
+     INCREASE VERSION WHEN script.js CHANGES
 ================================================== -->
 
-<script src="script.js?v=14"></script>
+<script src="script.js?v=15"></script>
 
 
 </body>
