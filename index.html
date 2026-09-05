@@ -4,7 +4,7 @@
 <head>
 
     <!-- ==================================================
-         BASIC PAGE SETTINGS
+         1. BASIC PAGE SETTINGS
     ================================================== -->
 
     <meta charset="UTF-8">
@@ -21,7 +21,7 @@
 
 
     <!-- ==================================================
-         PAGE TITLE + DESCRIPTION
+         2. PAGE TITLE + DESCRIPTION
     ================================================== -->
 
     <title>Dan's Audi S1 | F5 DFH</title>
@@ -33,7 +33,7 @@
 
 
     <!-- ==================================================
-         MAIN CSS
+         3. MAIN CSS FILE
     ================================================== -->
 
     <link
@@ -43,7 +43,8 @@
 
 
     <!-- ==================================================
-         IPHONE / HOME SCREEN / BOOKMARK ICON
+         4. IPHONE HOME SCREEN / BOOKMARK ICON
+         CURRENT IMAGE = photo020.jpeg
     ================================================== -->
 
     <link
@@ -74,7 +75,8 @@
 
 
     <!-- ==================================================
-         IMESSAGE / WHATSAPP / SOCIAL SHARE PREVIEW
+         5. IMESSAGE / WHATSAPP / SOCIAL SHARE PREVIEW
+         CURRENT IMAGE = photo020.jpeg
     ================================================== -->
 
     <meta
@@ -109,7 +111,7 @@
 
 
     <!-- ==================================================
-         OTHER SOCIAL PREVIEWS
+         6. OTHER SOCIAL SHARE PREVIEWS
     ================================================== -->
 
     <meta
@@ -139,7 +141,7 @@
 
 
 <!-- ==================================================
-     HERO SECTION
+     7. HERO SECTION
      MAIN HERO IMAGE = photo020.jpeg
 ================================================== -->
 
@@ -171,7 +173,7 @@
 
 
     <!-- ==================================================
-         TOP NAVIGATION
+         8. TOP NAVIGATION
     ================================================== -->
 
     <nav>
@@ -201,7 +203,7 @@
 
 
     <!-- ==================================================
-         HERO TEXT
+         9. HERO TEXT
     ================================================== -->
 
     <div
@@ -226,8 +228,13 @@
                 margin-left: 0;
             "
         >
+
             DAN'S
-            <span>AUDI S1</span>
+
+            <span>
+                AUDI S1
+            </span>
+
         </h1>
 
 
@@ -251,8 +258,10 @@
                 max-width: 520px;
             "
         >
+
             A personal archive documenting Dan's Audi S1,
             its history, modifications and photographs.
+
         </p>
 
 
@@ -268,11 +277,15 @@
 </header>
 
 
+<!-- ==================================================
+     10. MAIN PAGE CONTENT
+================================================== -->
+
 <main>
 
 
 <!-- ==================================================
-     THE CAR SECTION
+     11. THE CAR SECTION
 ================================================== -->
 
 <section id="car">
@@ -292,10 +305,11 @@
 
 
     <!-- ==================================================
-         CAR SPECIFICATION BOXES
+         12. CAR SPECIFICATION BOXES
     ================================================== -->
 
     <div class="specs">
+
 
         <div class="spec-box">
 
@@ -335,14 +349,15 @@
 
         </div>
 
+
     </div>
 
 </section>
 
 
 <!-- ==================================================
-     BUILD DIARY / PHOTO GALLERY
-     ALL DATES + PHOTOS ARE LOADED BY script.js
+     13. BUILD DIARY / PHOTO GALLERY
+     ALL DATES + PHOTOS ARE CONTROLLED BY script.js
 ================================================== -->
 
 <section id="gallery">
@@ -360,6 +375,25 @@
     <div class="red-line"></div>
 
 
+    <!--
+        DO NOT MANUALLY ADD DIARY PHOTOS HERE.
+
+        script.js currently controls:
+
+        - Collection Day
+        - Front End Respray
+        - Wheel Refurb
+        - YouTube wheel refurbishment video
+        - Quattro Front Grille
+        - Front End PPF
+        - Porsche Fuel Filler Cap
+        - Rear Wiper Delete
+        - Eventuri Carbon Intake
+        - Windscreen Replacement
+        - Window Tinting
+    -->
+
+
     <div id="galleryGrid">
     </div>
 
@@ -367,7 +401,7 @@
 
 
 <!-- ==================================================
-     MODIFICATIONS / BUILD LIST
+     14. MODIFICATIONS SECTION
 ================================================== -->
 
 <section id="mods">
@@ -386,8 +420,8 @@
 
 
     <!-- ==================================================
-         BUILD LIST
-         EDIT HERE WHEN NEW MODIFICATIONS ARE ADDED
+         15. BUILD LIST
+         ADD NEW MODIFICATIONS HERE
     ================================================== -->
 
     <div class="mods-box">
@@ -396,25 +430,46 @@
             BUILD LIST
         </h3>
 
+
         <p>
             Front End PPF
         </p>
+
 
         <p>
             Wheel Refurbishment
         </p>
 
+
         <p>
             Quattro Front Grille
         </p>
+
 
         <p>
             Porsche Fuel Filler Cap
         </p>
 
+
         <p>
             Rear Wiper Delete
         </p>
+
+
+        <p>
+            Eventuri Carbon Intake
+        </p>
+
+
+        <p>
+            Windscreen Replacement
+        </p>
+
+
+        <p>
+            Rear & Side Window Tinting
+        </p>
+
 
     </div>
 
@@ -425,13 +480,17 @@
 
 
 <!-- ==================================================
-     PHOTO LIGHTBOX
+     16. PHOTO LIGHTBOX
+     OPENS DIARY PHOTOS FULL SCREEN
 ================================================== -->
 
 <div
     id="lightbox"
     class="lightbox"
 >
+
+
+    <!-- CLOSE LIGHTBOX -->
 
     <button
         id="closeLightbox"
@@ -443,6 +502,8 @@
     </button>
 
 
+    <!-- PREVIOUS PHOTO -->
+
     <button
         id="previousPhoto"
         class="previous"
@@ -453,11 +514,15 @@
     </button>
 
 
+    <!-- CURRENT FULL SCREEN PHOTO -->
+
     <img
         id="lightboxImage"
         alt="Dan's Audi S1 photograph"
     >
 
+
+    <!-- NEXT PHOTO -->
 
     <button
         id="nextPhoto"
@@ -469,17 +534,20 @@
     </button>
 
 
+    <!-- PHOTO COUNTER -->
+
     <div
         id="photoCounter"
         class="photo-counter"
     >
     </div>
 
+
 </div>
 
 
 <!-- ==================================================
-     FOOTER
+     17. FOOTER
 ================================================== -->
 
 <footer>
@@ -502,8 +570,12 @@
 
 
 <!-- ==================================================
-     BUILD DIARY JAVASCRIPT
-     INCREASE VERSION WHEN script.js CHANGES
+     18. BUILD DIARY JAVASCRIPT
+     
+     CURRENT VERSION = 16
+
+     WHEN script.js IS CHANGED IN FUTURE:
+     change v=16 to v=17, then v=18 etc.
 ================================================== -->
 
 <script src="script.js?v=16"></script>
