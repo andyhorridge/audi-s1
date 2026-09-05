@@ -3,11 +3,13 @@ const galleryGrid = document.getElementById("galleryGrid");
 const photos = [];
 let currentPhoto = 0;
 
+const photoCache = new Map();
+
 const extensions = [
-    "jpg",
-    "JPG",
     "jpeg",
     "JPEG",
+    "jpg",
+    "JPG",
     "png",
     "PNG",
     "webp",
@@ -22,12 +24,6 @@ const extensions = [
 
 const diarySections = [
 
-
-    /* ==================================================
-       COLLECTION DAY
-       19 JULY 2026
-    ================================================== */
-
     {
         title: "Collection Day",
         date: "19th July 2026",
@@ -41,11 +37,6 @@ const diarySections = [
         ]
     },
 
-
-    /* ==================================================
-       FRONT END RESPRAY
-       11 AUGUST 2026
-    ================================================== */
 
     {
         title: "Front End Respray — Road and Race",
@@ -78,11 +69,6 @@ const diarySections = [
         ]
     },
 
-
-    /* ==================================================
-       WHEEL REFURB
-       19 AUGUST 2026
-    ================================================== */
 
     {
         title: "Wheel Refurb — Radar International",
@@ -132,11 +118,6 @@ const diarySections = [
     },
 
 
-    /* ==================================================
-       QUATTRO FRONT GRILLE + FRONT END PPF
-       28 AUGUST 2026
-    ================================================== */
-
     {
         title: "Quattro Front Grille & Front End PPF",
         date: "28th August 2026",
@@ -150,11 +131,6 @@ const diarySections = [
         ]
     },
 
-
-    /* ==================================================
-       PORSCHE FUEL FILLER CAP
-       29 AUGUST 2026
-    ================================================== */
 
     {
         title: "Porsche Fuel Filler Cap",
@@ -170,11 +146,6 @@ const diarySections = [
     },
 
 
-    /* ==================================================
-       REAR WIPER DELETE
-       31 AUGUST 2026
-    ================================================== */
-
     {
         title: "Rear Wiper Delete",
         date: "31st August 2026",
@@ -188,11 +159,6 @@ const diarySections = [
         ]
     },
 
-
-    /* ==================================================
-       EVENTURI CARBON INTAKE
-       SEPTEMBER 2026
-    ================================================== */
 
     {
         title: "Eventuri Carbon Intake",
@@ -208,11 +174,6 @@ const diarySections = [
     },
 
 
-    /* ==================================================
-       WINDSCREEN REPLACEMENT — AUTOGLASS
-       SEPTEMBER 2026
-    ================================================== */
-
     {
         title: "Windscreen Replacement — Autoglass",
         date: "September 2026",
@@ -226,11 +187,6 @@ const diarySections = [
         ]
     },
 
-
-    /* ==================================================
-       WINDOW TINT — TINT SHOP WARRINGTON
-       SEPTEMBER 2026
-    ================================================== */
 
     {
         title: "Window Tint — Tint Shop Warrington",
@@ -258,7 +214,7 @@ function numberName(number) {
 
 
 /* ==================================================
-   CHECK IF IMAGE EXISTS
+   CHECK IMAGE
 ================================================== */
 
 function checkImage(url) {
@@ -273,15 +229,18 @@ function checkImage(url) {
         image.src = url;
 
     });
-
 }
 
 
 /* ==================================================
-   FIND NUMBERED PHOTO
+   FIND PHOTO
 ================================================== */
 
 async function findPhoto(number) {
+
+    if (photoCache.has(number)) {
+        return photoCache.get(number);
+    }
 
     const formatted = numberName(number);
 
@@ -290,16 +249,76 @@ async function findPhoto(number) {
         const filename =
             `photo${formatted}.${extension}`;
 
-        const exists =
+        const result =
             await checkImage(filename);
 
-        if (exists) {
-            return exists;
+        if (result) {
+
+            photoCache.set(
+                number,
+                result
+            );
+
+            return result;
+        }
+    }
+
+    photoCache.set(number, null);
+
+    return null;
+}
+
+
+/* ==================================================
+   GET ALL PHOTO NUMBERS USED BY THE DIARY
+================================================== */
+
+function getRequiredPhotoNumbers() {
+
+    const numbers = [];
+
+    for (const section of diarySections) {
+
+        for (const item of section.items) {
+
+            if (item.type === "photos") {
+
+                for (
+                    let number = item.start;
+                    number <= item.end;
+                    number++
+                ) {
+
+                    if (!numbers.includes(number)) {
+                        numbers.push(number);
+                    }
+
+                }
+
+            }
+
         }
 
     }
 
-    return null;
+    return numbers;
+}
+
+
+/* ==================================================
+   PRELOAD ALL PHOTOS AT THE SAME TIME
+================================================== */
+
+async function preloadDiaryPhotos() {
+
+    const numbers =
+        getRequiredPhotoNumbers();
+
+    await Promise.all(
+        numbers.map(number =>
+            findPhoto(number)
+        )
+    );
 }
 
 
@@ -410,7 +429,8 @@ function createYouTubeVideo(videoId) {
     iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
 
-    iframe.allowFullscreen = true;
+    iframe.allowFullscreen =
+        true;
 
 
     videoBox.appendChild(iframe);
@@ -427,6 +447,17 @@ async function loadDiary() {
 
     galleryGrid.innerHTML = "";
 
+
+    /* =========================================
+       PRELOAD EVERYTHING FIRST
+    ========================================== */
+
+    await preloadDiaryPhotos();
+
+
+    /* =========================================
+       THEN BUILD THE DIARY
+    ========================================== */
 
     for (const section of diarySections) {
 
@@ -448,14 +479,14 @@ async function loadDiary() {
         for (const item of section.items) {
 
 
-            /* ==================================================
-               SUBHEADING
-            ================================================== */
+            /* SUBHEADING */
 
             if (item.type === "subheading") {
 
                 const subheading =
-                    createSubheading(item.title);
+                    createSubheading(
+                        item.title
+                    );
 
                 diarySection.appendChild(
                     subheading
@@ -464,9 +495,7 @@ async function loadDiary() {
             }
 
 
-            /* ==================================================
-               PHOTOS
-            ================================================== */
+            /* PHOTOS */
 
             if (item.type === "photos") {
 
@@ -485,7 +514,7 @@ async function loadDiary() {
                 ) {
 
                     const image =
-                        await findPhoto(number);
+                        photoCache.get(number);
 
                     if (image) {
 
@@ -502,9 +531,7 @@ async function loadDiary() {
             }
 
 
-            /* ==================================================
-               YOUTUBE
-            ================================================== */
+            /* YOUTUBE */
 
             if (item.type === "youtube") {
 
@@ -562,6 +589,9 @@ function addPhoto(
 
     image.loading =
         "lazy";
+
+    image.decoding =
+        "async";
 
 
     button.appendChild(image);
@@ -634,7 +664,7 @@ function closeLightbox() {
 
 
 /* ==================================================
-   UPDATE LIGHTBOX IMAGE
+   UPDATE LIGHTBOX
 ================================================== */
 
 function updateLightbox() {
@@ -737,13 +767,16 @@ document.addEventListener(
             return;
         }
 
+
         if (event.key === "Escape") {
             closeLightbox();
         }
 
+
         if (event.key === "ArrowRight") {
             nextPhoto();
         }
+
 
         if (event.key === "ArrowLeft") {
             previousPhoto();
