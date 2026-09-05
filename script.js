@@ -22,6 +22,7 @@ const extensions = [
 
 const diarySections = [
 
+
     /* ==================================================
        COLLECTION DAY
        19 JULY 2026
@@ -183,6 +184,63 @@ const diarySections = [
                 type: "photos",
                 start: 32,
                 end: 37
+            }
+        ]
+    },
+
+
+    /* ==================================================
+       EVENTURI CARBON INTAKE
+       SEPTEMBER 2026
+    ================================================== */
+
+    {
+        title: "Eventuri Carbon Intake",
+        date: "September 2026",
+
+        items: [
+            {
+                type: "photos",
+                start: 38,
+                end: 41
+            }
+        ]
+    },
+
+
+    /* ==================================================
+       WINDSCREEN REPLACEMENT — AUTOGLASS
+       SEPTEMBER 2026
+    ================================================== */
+
+    {
+        title: "Windscreen Replacement — Autoglass",
+        date: "September 2026",
+
+        items: [
+            {
+                type: "photos",
+                start: 42,
+                end: 47
+            }
+        ]
+    },
+
+
+    /* ==================================================
+       WINDOW TINT — TINT SHOP WARRINGTON
+       SEPTEMBER 2026
+    ================================================== */
+
+    {
+        title: "Window Tint — Tint Shop Warrington",
+        date: "September 2026",
+
+        items: [
+            {
+                type: "photos",
+                start: 48,
+                end: 53
             }
         ]
     }
@@ -352,8 +410,7 @@ function createYouTubeVideo(videoId) {
     iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
 
-    iframe.allowFullscreen =
-        true;
+    iframe.allowFullscreen = true;
 
 
     videoBox.appendChild(iframe);
@@ -391,7 +448,9 @@ async function loadDiary() {
         for (const item of section.items) {
 
 
-            /* SUBHEADING */
+            /* ==================================================
+               SUBHEADING
+            ================================================== */
 
             if (item.type === "subheading") {
 
@@ -405,7 +464,9 @@ async function loadDiary() {
             }
 
 
-            /* PHOTOS */
+            /* ==================================================
+               PHOTOS
+            ================================================== */
 
             if (item.type === "photos") {
 
@@ -441,7 +502,9 @@ async function loadDiary() {
             }
 
 
-            /* YOUTUBE */
+            /* ==================================================
+               YOUTUBE
+            ================================================== */
 
             if (item.type === "youtube") {
 
@@ -522,10 +585,7 @@ function addPhoto(
         };
 
 
-    targetGrid.appendChild(
-        button
-    );
-
+    targetGrid.appendChild(button);
 }
 
 
@@ -549,8 +609,7 @@ const photoCounter =
 
 function openLightbox(index) {
 
-    currentPhoto =
-        index;
+    currentPhoto = index;
 
     updateLightbox();
 
@@ -558,7 +617,6 @@ function openLightbox(index) {
 
     document.body.style.overflow =
         "hidden";
-
 }
 
 
@@ -572,7 +630,6 @@ function closeLightbox() {
 
     document.body.style.overflow =
         "";
-
 }
 
 
@@ -603,7 +660,6 @@ function updateLightbox() {
             `${currentPhoto + 1} / ${photos.length}`;
 
     }
-
 }
 
 
@@ -614,12 +670,10 @@ function updateLightbox() {
 function nextPhoto() {
 
     currentPhoto =
-        (currentPhoto + 1)
-        %
+        (currentPhoto + 1) %
         photos.length;
 
     updateLightbox();
-
 }
 
 
@@ -634,12 +688,10 @@ function previousPhoto() {
             currentPhoto
             - 1
             + photos.length
-        )
-        %
+        ) %
         photos.length;
 
     updateLightbox();
-
 }
 
 
@@ -685,16 +737,13 @@ document.addEventListener(
             return;
         }
 
-
         if (event.key === "Escape") {
             closeLightbox();
         }
 
-
         if (event.key === "ArrowRight") {
             nextPhoto();
         }
-
 
         if (event.key === "ArrowLeft") {
             previousPhoto();
