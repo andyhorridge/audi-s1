@@ -199,6 +199,24 @@ const diarySections = [
                 end: 53
             }
         ]
+    },
+
+
+    {
+        title: "Full Front XPEL PPF",
+        date: "September 2026",
+
+        items: [
+            {
+                type: "subheading",
+                title: "XPEL Paint Protection Film — Grille, Bonnet, Wings and Headlights"
+            },
+            {
+                type: "photos",
+                start: 54,
+                end: 57
+            }
+        ]
     }
 
 ];
