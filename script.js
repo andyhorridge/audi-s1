@@ -522,8 +522,13 @@ async function loadDiary() {
 
             if (item.type === "photos") {
 
+                const previousItem =
+                    section.items[section.items.indexOf(item) - 1];
+
                 const photoGrid =
-                    createPhotoGrid();
+                    previousItem?.type === "photos"
+                        ? diarySection.lastElementChild
+                        : createPhotoGrid();
 
                 diarySection.appendChild(
                     photoGrid
