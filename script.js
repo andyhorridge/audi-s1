@@ -169,6 +169,11 @@ const diarySections = [
                 type: "photos",
                 start: 38,
                 end: 41
+            },
+            {
+                type: "photos",
+                start: 58,
+                end: 60
             }
         ]
     },
