@@ -222,6 +222,20 @@ const diarySections = [
                 end: 57
             }
         ]
+    },
+
+
+    {
+        title: "Single Resonator Delete — Zaustworx",
+        date: "September 2026",
+
+        items: [
+            {
+                type: "photos",
+                start: 61,
+                end: 64
+            }
+        ]
     }
 
 ];
